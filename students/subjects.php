@@ -424,7 +424,7 @@ $class = 'SSS 1';
                             <td>
                               <button style="padding:7px 5px" type="button" id="form_button"
                                 class="btn social-btn btn-rounded btn-social-outline-twitter">
-                                <a href="topic.php">
+                                <a href="virtual_class.php?id=<?= $Subject['id']; ?>">
                                   <i class="fa fa-graduation-cap"></i>
                                 </a>
                               </button>

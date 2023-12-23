@@ -1,19 +1,6 @@
 <?php
 require("../settings.php");
 
-// if (isset($_POST['new_subject'])) { 
-//   $class = $_POST['new_class'];
-//   $new_subject = $_POST['new_subject'];
-//   $updateQuery = "INSERT INTO `subjects` (`subject`, `class`) VALUES (:subject, :class)";
-//     $updateStmt = $pdo->prepare($updateQuery);
-//     $updateStmt->bindParam(':subject', $new_subject, PDO::PARAM_STR);
-//     $updateStmt->bindParam(':class', $class, PDO::PARAM_STR);
-//     $updateStmt->execute();
-//   }
-
-
-
-
 if (isset($_GET['id'])) {
   $subject_id = $_GET['id'];
   $id = $_GET['id'];
@@ -236,6 +223,97 @@ if (isset($_GET['id'])) {
       border-radius: 70%;
       height: 200px;
       /* Adjust the height as needed */
+    }
+
+    .loading-container {
+      display: flex;
+      align-self: center;
+      margin-bottom: 2%;
+    }
+
+
+    #loading-container {
+      display: none;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+      background-color: #3498db;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 5px;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+    }
+
+    /* Separate keyframes for each dot with different delays */
+    @keyframes bounce-dot1 {
+
+      0%,
+      50%,
+      100% {
+        transform: translateY(0);
+      }
+
+      25% {
+        transform: translateY(-20px);
+      }
+
+      75% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes bounce-dot2 {
+
+      0%,
+      50%,
+      100% {
+        transform: translateY(0);
+      }
+
+      25% {
+        transform: translateY(-15px);
+      }
+
+      75% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes bounce-dot3 {
+
+      0%,
+      50%,
+      100% {
+        transform: translateY(0);
+      }
+
+      25% {
+        transform: translateY(-18px);
+      }
+
+      75% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Apply different animations and delays to each dot */
+    #dot1 {
+      animation: bounce-dot1 1.5s infinite;
+    }
+
+    #dot2 {
+      animation: bounce-dot2 1.5s infinite;
+      animation-delay: 0.2s;
+      /* Adjust the delay as needed */
+    }
+
+    #dot3 {
+      animation: bounce-dot3 1.5s infinite;
+      animation-delay: 0.4s;
+      /* Adjust the delay as needed */
     }
   </style>
 </head>
@@ -552,7 +630,7 @@ if (isset($_GET['id'])) {
 
           <div id="loading-screen">
             <img src="processing.gif" alt="Loading">
-            <p style="font-size: 17px">Submitting Homework... Do Not Close Window!</p>
+            <p style="font-size: 17px" id="loadingText"></p>
           </div>
 
 
@@ -640,6 +718,15 @@ if (isset($_GET['id'])) {
                       </div>
 
 
+
+                      <!-- Add this to your HTML -->
+                      <div id="loading-container" class="loading-container">
+                        <p style="font-size: 14px">Typing</p>
+                        <div class="dot" id="dot1"></div>
+                        <div class="dot" id="dot2"></div>
+                        <div class="dot" id="dot3"></div>
+                      </div>
+
                       <div class="form-group">
                         <div class="custom-input">
                           <input type="text" class="form-control form-control-lg" placeholder="Type your message..."
@@ -679,18 +766,16 @@ if (isset($_GET['id'])) {
                 <div class="grid-margin stretch-card">
                   <div class="row">
                     <div class="sticky-right">
-                      <div class="wrap col-md-8" style="padding-bottom: 10px;">
+                      <!-- <div class="wrap col-md-8" style="padding-bottom: 10px;">
                         <div class="wrapper">
                           <small>Progress</small>
-                          <p class="font-weight-semibold text-muted mb-0" style="padding-bottom: 5px">Change in
-                            Directors</p>
                           <div class="progress" style=" height: 4px; width: 160%">
                             <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
                               aria-valuemin="0" aria-valuemax="100">
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-md-12 grid-margin stretch-card">
 
                         <div class="card">
@@ -756,7 +841,7 @@ if (isset($_GET['id'])) {
             document.getElementById('userInput').value = '';
 
             // Simulate bot response (replace this with your actual Ajax call)
-            simulateBotTyping();
+            // simulateBotTyping();
 
 
             // cloudflare Hosted Rinda
@@ -827,12 +912,12 @@ if (isset($_GET['id'])) {
               data: { 'message': userInput, 'history': messagesHistory, },
               dataType: 'json',
               beforeSend: function () {
-                $("#loadingText").text("Getting Content...");
-                document.getElementById("loading-screen").style.display = "flex";
+                document.getElementById("loading-container").style.display = "flex";
               },
               success: function (response) {
                 if (response.success) {
                   // displayPopup(response.message, true);
+                  $('#loading-container').hide();
                   appendMessageToArray(response.message, 'bot');
                   console.log(response.message);
                 } else {
@@ -844,10 +929,11 @@ if (isset($_GET['id'])) {
               error: function (error) {
                 //console.error('Error:', error, xhr);
                 displayPopup(error, false);
+                document.getElementById("loading-container").style.display = "flex";
                 // Handle AJAX errors here
               },
               complete: function () {
-                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("loading-container").style.display = "none";
               },
             });
           }
@@ -866,21 +952,52 @@ if (isset($_GET['id'])) {
             chatArea.scrollTop = chatArea.scrollHeight;
           }
 
-          function simulateBotTyping() {
-            var chatArea = document.getElementById('chatArea');
-            var typingDot = document.createElement('div');
-            typingDot.className = 'typing-dot';
-            chatArea.appendChild(typingDot);
+          // function simulateBotTyping() {
+          //   var chatArea = document.getElementById('chatArea');
+          //   var typingDot = document.createElement('div');
+          //   typingDot.className = 'typing-dot';
+          //   chatArea.appendChild(typingDot);
 
-            // Scroll to the bottom to show the typing dot
-            chatArea.scrollTop = chatArea.scrollHeight;
-          }
+          //   // Scroll to the bottom to show the typing dot
+          //   chatArea.scrollTop = chatArea.scrollHeight;
+          // }
         </script>
 
 
         <!-- initials greetings implementation -->
         <script>
           document.addEventListener('DOMContentLoaded', function () {
+
+            // Function to append messages with delays
+            function appendMessagesWithDelays(messages) {
+              const loadingContainer = document.getElementById('loading-container');
+              loadingContainer.style.display = 'flex';
+
+              function appendMessageWithDelay(index) {
+                setTimeout(() => {
+                  // Display loading container for the specified intervals
+                  loadingContainer.style.display = 'none';
+
+                  // Append the message
+                  appendMessageToArray(messages[index].content, 'bot');
+                }, messages[index].delay);
+              }
+
+              // Loop through messages with delays
+              for (let i = 0; i < messages.length; i++) {
+                appendMessageWithDelay(i);
+              }
+            }
+
+            // Messages to be displayed with delays
+            const messagesWithDelays = [
+              { content: 'Hey there, welcome onboard', delay: 3000 }, // 3 seconds delay
+              { content: "You can call me Rinda. I'll be your personal tutor from now onwards, so feel free to ask anything you don't understand.", delay: 4000 }, // 2 seconds delay
+              { content: 'You can select a topic on the left, and I will generate tailored subtopics for you. Then, you can click on any of the subtopics I generated to the right of your screen to get started.', delay: 8000 } // 4 seconds delay
+            ];
+
+            // Call the function to append messages with delays
+            appendMessagesWithDelays(messagesWithDelays);
 
 
             // const subjectID = "As Rinda, a friendly casual teacher on the school's LMS, welcome the new student warmly. Initiate a casual conversation to learn more about the student, starting with their name, hobbies, and favorite subject. Keep your responses short and engaging. Wait for the student's reply before moving on to the next question. Once acquainted, guide the student through the LMS. Mention that they can explore topics on the left and sub-topics on the right. Encourage the student to select a topic so you can begin the tutorial together. Don;t generate untrue content";
@@ -966,10 +1083,10 @@ if (isset($_GET['id'])) {
             // Add styles to change cursor to hand on hover
             popup.style.cursor = 'pointer';
 
-            // Add click event to navigate to the target page
-            popup.addEventListener('click', function () {
-              window.location.href = 'your_target_page.html'; // Replace 'your_target_page.html' with the actual page URL
-            });
+            // // Add click event to navigate to the target page
+            // popup.addEventListener('click', function () {
+            //   window.location.href = 'your_target_page.html'; // Replace 'your_target_page.html' with the actual page URL
+            // });
 
             document.body.appendChild(popup);
           }
@@ -984,6 +1101,8 @@ if (isset($_GET['id'])) {
             document.querySelectorAll('.topics_tab').forEach(function (tab) {
               tab.addEventListener('click', async function () {
                 // Get the selected topic ID from the data attribute
+                $("#loadingText").text("Generating Personalized Subtopics Content...");
+                document.getElementById("loading-screen").style.display = "flex";
                 const selectedTopicId = tab.getAttribute('data-topic');
 
                 try {
@@ -1000,8 +1119,11 @@ if (isset($_GET['id'])) {
 
                   if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
+                    document.getElementById("loading-screen").style.display = "none";
                   }
 
+
+                  document.getElementById("loading-screen").style.display = "none";
                   document.getElementById('title_hide').style.display = "none";
                   document.getElementById('title_show').style.display = "block";
 
