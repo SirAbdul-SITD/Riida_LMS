@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve JSON Data</title>
+</head>
+<body>
+
+<script>
+    // Use fetch API to retrieve JSON data from the PHP script
+    fetch('get.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            // Now you can use 'data' in your JavaScript code
+            // For example, you can iterate over subtopics
+            data.Subtopics.forEach(subtopic => {
+                console.log('Topic:', subtopic.Topic);
+                console.log('Description:', subtopic.Description);
+                console.log('---');
+            });
+        })
+        .catch(error => console.error('Error:', error));
+</script>
+
+</body>
+</html>

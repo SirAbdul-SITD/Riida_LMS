@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fade In/Out Demo</title>
+  <style>
+    .container {
+      width: 300px;
+      margin: 50px auto;
+    }
+    .child {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="child visible" id="child1">
+    <p>Child 1 Content</p>
+    <button onclick="nextChild('child1', 'child2')">Next</button>
+  </div>
+  <div class="child" id="child2">
+    <p>Child 2 Content</p>
+    <button onclick="nextChild('child2', 'child3')">Next</button>
+  </div>
+  <div class="child" id="child3">
+    <p>Child 3 Content</p>
+    <button onclick="nextChild('child3', 'child4')">Next</button>
+  </div>
+  <div class="child" id="child4">
+    <p>Child 4 Content</p>
+    <button onclick="nextChild('child4', 'child5')">Next</button>
+  </div>
+  <div class="child" id="child5">
+    <p>Child 5 Content</p>
+    <button onclick="submitForm()">Submit</button>
+  </div>
+</div>
+
+<script>
+  function nextChild(currentChildId, nextChildId) {
+    // Fade out current child
+    document.getElementById(currentChildId).style.opacity = 0;
+    setTimeout(function () {
+      // Hide current child and show the next one
+      document.getElementById(currentChildId).classList.remove('visible');
+      document.getElementById(nextChildId).classList.add('visible');
+      // Fade in next child
+      document.getElementById(nextChildId).style.opacity = 1;
+    }, 500); // Delay for fade out animation
+  }
+
+  function submitForm() {
+    // Add logic to handle form submission
+    alert('Form submitted!');
+  }
+</script>
+
+</body>
+</html>
+
+
+The spice island
+
+michel angelo

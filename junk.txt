@@ -1,0 +1,50 @@
+
+<p class="card-description"> Add new subject </p>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Subject Name</label>
+                            <div class="col-sm-9">
+                              <input required type="text" class="form-control" name="new_subject" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Class</label>
+                            <div class="col-sm-9">
+                              <select required class="form-control" name="new_class">
+                                  <option selected disabled> Select </option>
+                                  <?php foreach ($classes as $class): ?>
+                                <option value="<?= $class['class']; ?>"> <?= $class['class']; ?></option>
+                                <?php endforeach; ?>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+
+
+schedule day and timespan \\
+
+topics to cover \\
+
+weeks to cover topcics \\
+
+show term and academic session \\
+
+assign teacher
+
+
+
+Rinda:
+  character responsible for generating assessments
+  character responsible for formatting json
+  character responsible for marking assessments
+  character responsible for generating topic contents
+  characters responsible for tutors
+  character responsible for insights and alanytics

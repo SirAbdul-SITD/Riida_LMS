@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Query Page</title>
+</head>
+
+<body>
+
+
+
+  <!-- Add a div to display the response -->
+  <div id="response-container"></div>
+
+  <script>
+    async function query(data) {
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
+        {
+          headers: {
+            Authorization: "Bearer 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",
+            "Content-Type": "application/json"  // Set Content-Type to application/json
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      return result;
+    }
+
+    // Update the response display in the HTML
+    query({ "inputs": "explain to a dummy what linear algebra is, its use, and also include if it has any category or subtopic all in details with 5 examples for ech subtopic, let your explanation be lengthy, nothing less than 2000 words" }).then((response) => {
+      const responseContainer = document.getElementById("response-container");
+
+      // Display the response in the div
+      responseContainer.textContent = JSON.stringify(response, null, 2);
+    });
+  </script>
+
+</body>
+
+</html>
+
+Thermodynamics is a branch of physics that deals with the study of energy and its transformation from one form to
+another. It explores how energy interacts with matter and its relationship to temperature, pressure, and volume.
+
+There are three basic laws of thermodynamics that form the foundation of this field:
+
+1. The First Law of Thermodynamics, also known as the law of conservation of energy, states that energy cannot be
+created or destroyed, but only transferred or converted from one form to another. This means that the total amount of
+energy in a closed system remains constant.
+
+For example, let's consider a simple system of a container with gas. If heat is applied to the gas, its temperature will
+increase, and if work is done on the gas, its internal energy will increase. However, the total energy in the system
+will remain the same.
+
+2. The Second Law of Thermodynamics introduces the concept of entropy and the direction of natural processes. Entropy is
+a measure of the randomness or disorder in a system. This law states that in any natural process, the total entropy of a
+closed system will always increase or remain constant. In other words, natural processes tend to move towards a state of
+higher disorder.
+
+An example of this law is putting ice cubes in a warm room. The ice cubes will melt and the water will eventually reach
+the same temperature as the room. This is because heat is transferring from the warm room to the cooler ice, causing an
+increase in disorder (entropy).
+
+3. The Third Law of Thermodynamics states that as temperature approaches absolute zero (0 Kelvin or -273.15°C), the
+entropy of a perfectly crystalline substance becomes zero. This law establishes a reference point for entropy
+calculations and provides a link between thermodynamics and the concept of zero Kelvin.
+
+For instance, let's consider a solid crystal at absolute zero temperature. The atoms in the crystal will have their
+minimum possible energy and will be arranged in a perfectly ordered manner, resulting in zero entropy.
+
+Thermodynamics also involves the study of various thermodynamic processes such as isothermal, adiabatic, and isobaric
+processes. These processes describe how energy is transferred and how work is done in a system.
+
+Understanding thermodynamics is essential in various fields, including engineering, chemistry, and even biology. It
+helps us analyze and design energy systems, improve the efficiency of engines, and comprehend natural phenomena like
+weather patterns and climate change.
+
+In conclusion, thermodynamics is a fascinating branch of physics that focuses on energy and its transformation. Through
+the laws of thermodynamics, we can understand how energy behaves and how it influences the world around us.
