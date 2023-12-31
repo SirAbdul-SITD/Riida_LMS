@@ -455,7 +455,7 @@ if (isset($_GET['id'])) {
                       <?php endforeach; ?>
 
                       <?php foreach ($questionsData['EssayQuestions'] as $index => $question): ?>
-                        <input type="hidden" name="essay">
+                        <input type="hidden" name="essay<?= $index + 1; ?>" value="<?= $question['Question']; ?>">
                         <p>
                           <?= $index + 1; ?>.
                           <?= $question['Question']; ?>
@@ -487,23 +487,23 @@ if (isset($_GET['id'])) {
                     <div class="card" style="padding: 0px; margin: 0px;">
                       <div class="card-body d-flex " style="padding: 0px; margin: 0px;">
                         <div class="wrapper" style="padding: 9px; margin: 0px;">
-                        <div style="padding: 0px 15px 0px 15px">
-                          <strong>Scores:</strong> </br>
-                          <span style="padding: 0px 15px 0px 40px">
-                            Objectives Answers Scores: <span id="obj_scores">2</span>
-                          </span> </br> </br>
-                          <span style="padding: 0px 15px 0px 40px">
-                            Theory Answers Scores: <span id="essay_scores">3</span>
-                          </span>
-                        </div>
-                          <div id="time_lapse" style="display none">
-                          <script src="https://cdn.logwork.com/widget/countdown.js"></script>
-                          <a href="https://logwork.com/countdown-8khp" class="countdown-timer"
-                            data-timezone="Africa/Lagos" data-date="<?= $assessments['date']; ?> <?php $time = date("H:i", strtotime($assessment['time']));
-                              echo $time;
-                              ?>" style="font-size: large">
-                            <h6>Submits</h6>
-                          </a>
+                          <div style="padding: 0px 18px 0px 18px" id="scores"  style="display: none">
+                            <strong>Scores:</strong> </br>
+                            <span style="padding: 0px 15px 0px 40px">
+                              Objectives Answers Scores: <span id="obj_scores">2</span>
+                            </span> </br> </br>
+                            <span style="padding: 0px 15px 0px 40px">
+                              Theory Answers Scores: <span id="essay_scores">3</span>
+                            </span>
+                          </div>
+                          <div id="time_lapse">
+                            <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+                            <a href="https://logwork.com/countdown-8khp" class="countdown-timer"
+                              data-timezone="Africa/Lagos" data-date="<?= $assessments['date']; ?> <?php $time = date("H:i", strtotime($assessment['time']));
+                                 echo $time;
+                                 ?>" style="font-size: large">
+                              <h6>Submits</h6>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -513,11 +513,19 @@ if (isset($_GET['id'])) {
                       <div class="card-body d-flex">
                         <div class="wrapper">
                           <h5>Homework Details</h5>
-                          <p><strong>Type:</strong> <?= $assessments['type']; ?></p>
-                          <p><strong>Due Date:</strong> <?php $dt = date("j F, Y", strtotime($assessments['date']));
-                              echo $dt; ?></p>
-                          <p><strong>Subject:</strong> <?= $assessments['subject']; ?></p>
-                          <p><strong>Class:</strong> <?= $assessments['class']; ?></p>
+                          <p><strong>Type:</strong>
+                            <?= $assessments['type']; ?>
+                          </p>
+                          <p><strong>Due Date:</strong>
+                            <?php $dt = date("j F, Y", strtotime($assessments['date']));
+                            echo $dt; ?>
+                          </p>
+                          <p><strong>Subject:</strong>
+                            <?= $assessments['subject']; ?>
+                          </p>
+                          <p><strong>Class:</strong>
+                            <?= $assessments['class']; ?>
+                          </p>
                           <p><strong>Instructions:</strong> Solve the problems on pages 50-60 in your textbook and
                             submit your solutions by the due date.</p>
                         </div>
@@ -551,7 +559,7 @@ if (isset($_GET['id'])) {
 
             // Add click event to navigate to the target page
             popup.addEventListener('click', function () {
-              window.location.href = 'your_target_page.html'; // Replace 'your_target_page.html' with the actual page URL
+              window.location.href = 'subjects.php'; // Replace 'your_target_page.html' with the actual page URL
             });
 
             document.body.appendChild(popup);
@@ -622,6 +630,3 @@ if (isset($_GET['id'])) {
 </body>
 
 </html>
-
-
-

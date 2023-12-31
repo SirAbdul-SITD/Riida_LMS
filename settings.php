@@ -16,16 +16,16 @@ session_start();
 // error_reporting(E_ALL);
 
 
-// $servername = "localhost";
-// $username = "mytvglow_billzwave";
-// $password = "VYIhLghDd,m@4NxDmW";
-// $database = "mytvglow_billzwave";
-
-
 $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edurida";
+$username = "riidalms_rindalms";
+$password = "OYAtshA03O,M5cvJrs";
+$database = "riidalms_rindalms";
+
+
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "edurida";
 $tutor = 'Ahmad';
 
 try {
