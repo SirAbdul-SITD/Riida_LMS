@@ -11,21 +11,21 @@ session_start();
 //      exit();
 //  }
 
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-
-
-$servername = "localhost";
-$username = "riidalms_rindalms";
-$password = "OYAtshA03O,M5cvJrs";
-$database = "riidalms_rindalms";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 // $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $database = "edurida";
+// $username = "Rindalms_rindalms";
+// $password = "OYAtshA03O,M5cvJrs";
+// $database = "Rindalms_rindalms";
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "edurida";
 $tutor = 'Ahmad';
 
 try {

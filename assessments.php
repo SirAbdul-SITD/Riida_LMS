@@ -1,7 +1,13 @@
 <?php
 require("settings.php");
 
+if (isset($_POST['class'])) {
+  $class = $_POST['class'];
+}
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +15,8 @@ require("settings.php");
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Rinda LMS</title>
+  <title>Assessments | Rinda LMS
+  </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
@@ -21,19 +28,26 @@ require("settings.php");
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="assets/css/shared/style.css">
+  <link rel="stylesheet" href="assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/demo_1/style.css">
   <!-- End Layout styles -->
   <link rel="shortcut icon" href="assets/images/favicon.ico" />
-  <script src="jquery-3.6.4.min.js"></script>
-  <script src="bootstrap.min.js"></script>
+  <script src="../jquery-3.6.4.min.js"></script>
+  <!-- <script src="../bootstrap.min.js"></script> -->
+
+  <!-- Add these links in the head section of your HTML file -->
+  <!-- <link rel="stylesheet" href="../bootstrap.min.css">
+  <script src="../popper.min.js"></script> -->
+  <script src="../bootstrap.min.js"></script>
 
 
   <style>
     .card {
       border-radius: 10px;
     }
+
 
     .popup {
       position: fixed;
@@ -64,25 +78,18 @@ require("settings.php");
       margin-right: 5px;
     }
 
-    #loading-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.9);
-      z-index: 1000;
-    }
 
-    #loading-screen img {
-      width: 200px;
-      border-radius: 70%;
-      height: 200px;
-      /* Adjust the height as needed */
+    #loadingScreen {
+      position: fixed;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      display: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -93,13 +100,11 @@ require("settings.php");
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <div></div>
-        <a class="navbar-brand brand-logo text-center" href="index.html">
-          <i class="fa fa-graduation-cap"></i>
-          <h3 style="font-weight: bold">Rinda LMS</h3>
-        </a>
+        <a class="navbar-brand brand-logo text-center" href="index.html"> 
+        <i class="fa fa-graduation-cap"></i>
+        <h3 style="font-weight: bold">Rinda LMS</h3> </a>
         <a class="navbar-brand brand-logo-mini" href="index.html">
-          <h3 style="font-weight: bold">Rinda LMS</h3>
-        </a>
+          <h3 style="font-weight: bold">Rinda LMS</h3> </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav">
@@ -324,11 +329,24 @@ require("settings.php");
         </ul>
       </nav>
 
+
+
+
       <?php
-      $query = "SELECT * FROM teachers";
+      $query = "SELECT * FROM assessments WHERE create_by = :tutor";
       $stmt = $pdo->prepare($query);
+      $stmt->bindParam(':tutor', $tutor, PDO::PARAM_STR);
       $stmt->execute();
-      $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      $query = "SELECT * FROM subjects WHERE tutor = :tutor";
+      $stmt = $pdo->prepare($query);
+      $stmt->bindParam(':tutor', $tutor, PDO::PARAM_STR);
+      $stmt->execute();
+      $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 
       ?>
 
@@ -340,33 +358,95 @@ require("settings.php");
               <div class="">
                 <div class="">
                   <div class="card-body d-flex flex-column">
-                    <form action="" id="add_class_form" method="post">
-                      <div class="add_new_class">
-                        <p>Add New Class</p>
+                    <div class="wrapper">
+                      <p>Tweak Settings</p>
+                      <form action="" method="post" id="generate_form">
                         <div>
-
                           <div class="form-group">
-                            <label for="new_class">Class Name</label>
-                            <input style="border-radius: 10px; height: 40px" name="new_class" class="form-control"
-                              type="text" placeholder="Enter Class Name">
-                          </div>
-
-
-                          <div class="form-group">
-                            <label for="teacher_id">Assign Teacher</label>
-                            <select style="border-radius: 10px; height: 40px" class="form-control" name="teacher_id">
-                              <option selected disabled>None</option>
-                              <?php
-                              foreach ($teachers as $teacher): ?>
-                                <option value="<?= $teacher['id']; ?>"> <?= $teacher['first_name'] . ' ' . $teacher['last_name']; ?></option>
+                            <label for="type">Subject</label>
+                            <select style="border-radius: 10px; height: 40px" required class="form-control"
+                              name="subject">
+                              <option selected disabled> Select </option>
+                              <?php foreach ($subjects as $subjectItem): ?>
+                                <option value="<?= $subjectItem['subject']; ?>" > <?= $subjectItem['subject'] . ' - ' . $subjectItem['class']; ?></option>
                               <?php endforeach; ?>
                             </select>
                           </div>
+
+                          <div class="form-group">
+                            <label for="type">Type</label>
+                            <select style="border-radius: 10px; height: 40px" required class="form-control" name="type">
+                              <option selected disabled>Select</option>
+                              <option>Homework</option>
+                              <option>Test</option>
+                              <option>Class work</option>
+                            </select>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="date">Schedule</label>
+                                <input style="border-radius: 10px; height: 40px" name="date" class="form-control"
+                                  type="date">
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="time"></label>
+                                <input style="border-radius: 10px; height: 40px" class="form-control" type="time"
+                                  name="time">
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                          <div class="form-group">
+                            <label for="mode">Mode</label>
+                            <select style="border-radius: 10px; height: 40px" class="form-control" name="mode">
+                              <option disabled selected>Select</option>
+                              <option>Physical</option>
+                              <option>CBT</option>
+                            </select>
+                          </div>
+
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="date">Number of Questions</label>
+                                <input style="border-radius: 10px; height: 40px" name="objective" class="form-control"
+                                  type="number" placeholder="Objective Questions">
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="time"></label>
+                                <input style="border-radius: 10px; height: 40px" class="form-control" type="number"
+                                  name="essay" placeholder="Essay Questions">
+                              </div>
+                            </div>
+                          </div>
+
+                          <input type="hidden" name="tutor" value="<?= $tutor ?>">
+                          <input type="hidden" name="class" value="<?= $subjectItem['class'] ?>">
+                          <input type="hidden" name="subject_id" value="<?= $subjectItem['id'] ?>">
+
+                          <div class="form-group">
+                            <label for="focus">Question Focus</label>
+                            <textarea style="border-radius: 10px;" class="form-control" id="focus" name="focus" rows="5"
+                              placeholder="E.g Generate questions from ... and ... topics only"></textarea>
+                          </div>
+
                         </div>
-                        <button id="add_class_form_button" type="submit" class="btn btn-inverse-success btn-sm"
-                          style="width: 100%; height: 40px; border-radius: 10px;">Create Subject</button>
-                      </div>
-                    </form>
+                        <button type="submit" class="btn btn-inverse-success btn-sm" style="width: 100%"
+                          id="generate">Generate
+                          Assessment</button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -377,78 +457,113 @@ require("settings.php");
 
 
 
-
-
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div id="loading-screen">
-            <img src="processing.gif" alt="Loading">
-            <p style="font-size: 17px">Adding New Class...</p>
-          </div>
+          <div id="loadingScreen">Generating... May take a while</div>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-11">
-                      <h4 class="card-title">Classes</h4>
+                      <h4 class="card-title">Assessments</h4>
+                      <p class="card-description" style="padding: 2px 5px;">
+                        <?php if (isset($_POST['class'])) {
+                          echo $_POST['class'];
+                        } ?>
+                      </p>
                     </div>
                     <div>
                       <div class="form-group">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#add_new"
-                          style=" width: 40px; border-radius: 10px; height: 40px;"
-                          class=" align-items-center btn btn-icons btn-inverse-success">
-                          <i class="mdi mdi-plus"></i>
-                        </button>
+                        <div>
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#add_new"
+                            style=" width: 40px; border-radius: 10px; height: 40px;"
+                            class=" align-items-center btn btn-icons btn-inverse-success">
+                            <i class="mdi mdi-plus"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <?php
-                  $query = "SELECT * FROM classes ORDER BY `classes`.`class` ASC";
-                  $stmt = $pdo->prepare($query);
-                  $stmt->execute();
-                  $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                  if (count($classes) === 0) {
+
+
+
+                  <?php
+                  if (count($assessments) === 0) {
                     echo '<p class="text-center">None added Yet!</p>';
+                    echo '<center> <a href="#" data-bs-toggle="modal"
+                    data-bs-target="#add_new"> <button type="submit" class="btn btn-inverse-success btn-sm" style="width: 20%">Add New</button> </a></center>';
+
+
                   } else {
                     ?>
+
 
                     <table class="table table-striped">
                       <thead>
                         <tr>
                           <th> Index </th>
+                          <th> Subject </th>
                           <th> Class </th>
-                          <th> No. of Students </th>
-                          <th> No. of Classes </th>
-                          <th> Explore </th>
+                          <th> Type </th>
+                          <th> Time </th>
+                          <th> Date </th>
+                          <th> Mode </th>
+                          <th> Status </th>
+                          <th> Action </th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($classes as $index => $class): ?>
+                        foreach ($assessments as $index => $assessment): ?>
                           <tr>
                             <td class="py-1">
                               <?= $index + 1; ?>
                             </td>
-                            <td class="py-1">
-                              <?= $class['class']; ?>
+                            <td>
+                              <?= $assessment['subject']; ?>
                             </td>
                             <td>
-                              <?= $class['student_no']; ?>
+                              <?= $assessment['class']; ?>
                             </td>
                             <td>
-                              <?= $class['subject_no']; ?>
+                              <?= $assessment['type']; ?>
                             </td>
                             <td>
-                              <form action="subjects.php" method="post">
-                                <input type="hidden" name="class" value="<?= $class['class']; ?>">
-                                <button type="submit" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                                  <i class="mdi mdi-settings"></i>
-                                </button>
-                              </form>
+                              <?php $time = date("H:i", strtotime($assessment['time']));
+                              echo $time;
+                              ?>
+                            </td>
+                            <td>
+                              <?php $dt = date("j F, Y", strtotime($assessment['date']));
+                              echo $dt; ?>
+                            </td>
+                            <td>
+                              <?= $assessment['mode']; ?>
+                            </td>
+                            <td class="text-warning">
+                              <?= $assessment['status']; ?>
+                            </td>
+                            <td>
+                              <div class="row" style="justify-content: space-around;">
+                                <a
+                                  href="edit_assessment.php?id=<?= $assessment['id'] ?> & subject=<?= $assessment['subject'] ?>">
+                                  <button type="button" id="form_button"
+                                    class="btn social-btn btn-rounded btn-social-outline-twitter"
+                                    style="width: 30px; height: 30px; padding: 0%;">
+                                    <i class="mdi mdi-settings"></i>
+                                  </button>
+                                </a>
 
+
+                                <button type="button" id="form_button"
+                                  class="btn social-btn btn-rounded btn-social-outline-twitter"
+                                  style="width: 30px; height: 30px; padding: 0%">
+                                  <i class="fa fa-bar-chart-o"></i>
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         <?php endforeach; ?>
@@ -463,6 +578,7 @@ require("settings.php");
 
 
         <script>
+
           //Function to display a popup message
           function displayPopup(message, success) {
             var popup = document.createElement('div');
@@ -487,49 +603,49 @@ require("settings.php");
 
 
 
-          document.getElementById("add_class_form_button").addEventListener("click", function (event) {
-            console.log('form submitted');
-            event.preventDefault();
+          $(document).ready(function () {
+            document.getElementById("generate").addEventListener("click", function () {
+              event.preventDefault();
 
+              $.ajax({
+                type: 'POST',
+                url: 'add_assessment.php',
+                data: $('#generate_form').serialize(),
+                dataType: 'json',
+                beforeSend: function () {
+                  $('#generate').prop('disabled', true);
+                  $('#generate_form :input').prop('disabled', true);
+                  $('#loadingScreen').show();
+                },
+                success: function (response) {
+                  if (response.success) {
+                    console.log(response.content);
+                    displayPopup(response.message, true);
+                    // $('#loadingScreen').hide();
+                    // $('#add_new').modal('hide');
+                    // Process the response here, e.g., update the DOM with the content
+                  } else {
+                    console.log('Error: ' + response.message);
+                    displayPopup(response.message, false);
+                  }
+                },
 
-
-            $.ajax({
-              type: 'POST',
-              url: 'add_class.php',
-              data: $('#add_class_form').serialize(),
-              dataType: 'json',
-              beforeSend: function () {
-                document.getElementById("loading-screen").style.display = "flex";
-                // Disable submit button and input fields
-                $('#add_new').modal('hide');
-              },
-              success: function (response) {
-                // Check the 'success' property in the response
-                if (response.success) {
-                  // Display success popup
-                  displayPopup(response.message, true);
-                  // Close the modal (adjust this based on your modal implementation)
-                  document.getElementById("loading-screen").style.display = "none";
-                } else {
-                  // Display error popup
-                  displayPopup(response.message, false);
-                }
-              },
-              error: function (error, xhr) {
-                // Display error popup for AJAX error
-                displayPopup('Error occurred during AJAX request', false);
-                console.error('Error:', error, xhr);
-                $('#add_new').modal('show');
-              },
-              complete: function () {
-                document.getElementById("loading-screen").style.display = "none";
-              },
+                error: function (error, xhr) {
+                  console.error('Error:', error, xhr);
+                  displayPopup('Error occurred during AJAX request', false);
+                  // Handle AJAX errors here
+                },
+                complete: function () {
+                  // Disable loading icon or perform any post-request actions
+                  $('#loadingScreen').hide();
+                  $('#add_new').modal('hide');
+                  $('#generate').prop('disabled', false);
+                  $('#generate_form :input').prop('disabled', false);
+                },
+              });
             });
           });
-
-
         </script>
-
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
@@ -538,8 +654,7 @@ require("settings.php");
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2023</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Rinda LMS Demo from <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management
-                Software</a></span>
+                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management Software</a></span>
           </div>
         </footer>
         <!-- partial -->

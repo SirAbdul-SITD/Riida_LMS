@@ -16,7 +16,7 @@ if (isset($_POST['class'])) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Subjects | Riida LMS
+  <title>Subjects | Rinda LMS
   </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
@@ -103,10 +103,10 @@ if (isset($_POST['class'])) {
         <div></div>
         <a class="navbar-brand brand-logo text-center" href="index.html">
           <i class="fa fa-graduation-cap"></i>
-          <h3 style="font-weight: bold">Riida LMS</h3>
+          <h3 style="font-weight: bold">Rinda LMS</h3>
         </a>
         <a class="navbar-brand brand-logo-mini" href="index.html">
-          <h3 style="font-weight: bold">Riida LMS</h3>
+          <h3 style="font-weight: bold">Rinda LMS</h3>
         </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
@@ -277,129 +277,61 @@ if (isset($_POST['class'])) {
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="index.php">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <i class="menu-icon typcn typcn-bell"></i>
-              <span class="menu-title">Apps</span>
+            <a class="nav-link" data-toggle="collapse" href="teachers.php" aria-expanded="false" aria-controls="ui-2">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Teachers</span>
+              <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-1" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="classes.php" aria-expanded="false" aria-controls="ui-1">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Classes</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="students.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Students</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-1">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-2" aria-expanded="false" aria-controls="ui-2">
+            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false" aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Lectures</span>
+              <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-2">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All lectures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Process new lecture</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Edit lectures</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-3" aria-expanded="false" aria-controls="ui-3">
-              <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Exams</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-3">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All Exams</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Generate New</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Mark Assessments</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="calendar.php">
               <i class="menu-icon typcn typcn-shopping-bag"></i>
               <span class="menu-title">Calendar</span>
             </a>
           </li>
+          
           <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <i class="menu-icon typcn typcn-th-large-outline"></i>
-              <span class="menu-title">Events</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
+            <a class="nav-link" href="notifications.php">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/icons/font-awesome.html">
+            <a class="nav-link" href="analytics.php">
               <i class="menu-icon typcn typcn-user-outline"></i>
-              <span class="menu-title">Chats</span>
+              <span class="menu-title">Analytics</span>
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon typcn typcn-document-add"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/login.html"> Login </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/register.html"> Register </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-404.html"> 404 </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
-                </li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>
+
 
       <?php
       // $query = "SELECT * FROM terms";
@@ -614,7 +546,7 @@ if (isset($_POST['class'])) {
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-        <div id="loading-screen">
+          <div id="loading-screen">
             <img src="processing.gif" alt="Loading">
             <p style="font-size: 17px">Generating Subject Contents... May take upto a minute</p>
           </div>
@@ -845,10 +777,10 @@ if (isset($_POST['class'])) {
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Riida LMS
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2023</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Riida LMS Demo from <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Riida School Management
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Rinda LMS Demo from <a
+                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management
                 Software</a></span>
           </div>
         </footer>

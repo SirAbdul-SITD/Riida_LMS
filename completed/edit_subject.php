@@ -34,7 +34,7 @@ if (isset($_POST['class'])) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Subjects | Riida LMS
+  <title>Subjects | Rinda LMS
   </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
@@ -77,9 +77,9 @@ if (isset($_POST['class'])) {
         <div></div>
         <a class="navbar-brand brand-logo text-center" href="index.html"> 
         <i class="fa fa-graduation-cap"></i>
-        <h3 style="font-weight: bold">Riida LMS</h3> </a>
+        <h3 style="font-weight: bold">Rinda LMS</h3> </a>
         <a class="navbar-brand brand-logo-mini" href="index.html">
-          <h3 style="font-weight: bold">Riida LMS</h3> </a>
+          <h3 style="font-weight: bold">Rinda LMS</h3> </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav">
@@ -549,10 +549,10 @@ if (isset($_POST['class'])) {
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Riida LMS
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2023</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Riida LMS Demo from <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Riida School Management Software</a></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Rinda LMS Demo from <a
+                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management Software</a></span>
           </div>
         </footer>
         <!-- partial -->
