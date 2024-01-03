@@ -9,7 +9,7 @@ require("settings.php");
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Rinda LMS</title>
+  <title>Teachers | Rinda LMS</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
@@ -275,14 +275,14 @@ require("settings.php");
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="teachers.php" aria-expanded="false" aria-controls="ui-2">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-2">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Teachers</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="classes.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Classes</span>
               <i class="menu-arrow"></i>
@@ -296,7 +296,15 @@ require("settings.php");
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false" aria-controls="ui-3">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Subjects</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false"
+              aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
@@ -308,7 +316,7 @@ require("settings.php");
               <span class="menu-title">Calendar</span>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link" href="notifications.php">
               <i class="menu-icon typcn typcn-bell"></i>
@@ -325,10 +333,10 @@ require("settings.php");
       </nav>
 
       <?php
-      $query = "SELECT * FROM teachers";
+      $query = "SELECT * FROM classes";
       $stmt = $pdo->prepare($query);
       $stmt->execute();
-      $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       ?>
 
@@ -341,30 +349,50 @@ require("settings.php");
                 <div class="">
                   <div class="card-body d-flex flex-column">
                     <form action="" id="add_class_form" method="post">
-                      <div class="add_new_class">
-                        <p>Add New Class</p>
+                      <div class="add_new_teacher">
+                        <p>Add New Teacher</p>
                         <div>
 
-                          <div class="form-group">
-                            <label for="new_class">Class Name</label>
-                            <input style="border-radius: 10px; height: 40px" name="new_class" class="form-control"
-                              type="text" placeholder="Enter Class Name">
+
+
+                          <div class="row  schedule_tab" id="schedule_tab">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="first_name">First Name</label>
+                                <input required style="border-radius: 10px; height: 40px" name="first_name" class="form-control"
+                                  type="text" placeholder="Enter First Name">
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="last_name">Last Name</label>
+                                <input required style="border-radius: 10px; height: 40px" name="last_name" class="form-control"
+                                  type="text" placeholder="Enter Last Name">
+                              </div>
+                            </div>
                           </div>
 
+                          <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input required style="border-radius: 10px; height: 40px" name="email" class="form-control"
+                                  type="email" placeholder="Enter Teacher's Email">
+                              </div>
 
                           <div class="form-group">
-                            <label for="teacher_id">Assign Teacher <small style="color:grey">optional</small></label>
-                            <select style="border-radius: 10px; height: 40px" class="form-control" name="teacher_id">
+                            <label for="class_id">Assign Class <small style="color:grey">optional</small></label>
+                            <select style="border-radius: 10px; height: 40px" class="form-control" name="class_id">
                               <option selected disabled>None</option>
                               <?php
-                              foreach ($teachers as $teacher): ?>
-                                <option value="<?= $teacher['id']; ?>"> <?= $teacher['first_name'] . ' ' . $teacher['last_name']; ?></option>
+                              foreach ($classes as $class): ?>
+                                <option value="<?= $class['id']; ?>"> <?= $class['name']; ?></option>
                               <?php endforeach; ?>
                             </select>
+
                           </div>
                         </div>
                         <button id="add_class_form_button" type="submit" class="btn btn-inverse-success btn-sm"
-                          style="width: 100%; height: 40px; border-radius: 10px;">Create Subject</button>
+                          style="width: 100%; height: 40px; border-radius: 10px;">Add Teacher</button>
                       </div>
                     </form>
                   </div>
@@ -384,7 +412,7 @@ require("settings.php");
         <div class="content-wrapper">
           <div id="loading-screen">
             <img src="processing.gif" alt="Loading">
-            <p style="font-size: 17px">Adding New Class...</p>
+            <p style="font-size: 17px">Adding New Teacher...</p>
           </div>
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
@@ -392,7 +420,7 @@ require("settings.php");
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-11">
-                      <h4 class="card-title">Classes</h4>
+                      <h4 class="card-title">Teachers</h4>
                     </div>
                     <div>
                       <div class="form-group">
@@ -405,12 +433,12 @@ require("settings.php");
                     </div>
                   </div>
                   <?php
-                  $query = "SELECT * FROM classes ORDER BY `classes`.`class` ASC";
+                  $query = "SELECT * FROM teachers ORDER BY `teachers`.`first_name` ASC";
                   $stmt = $pdo->prepare($query);
                   $stmt->execute();
-                  $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                  $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                  if (count($classes) === 0) {
+                  if (count($teachers) === 0) {
                     echo '<p class="text-center">None added Yet!</p>';
                   } else {
                     ?>
@@ -419,31 +447,35 @@ require("settings.php");
                       <thead>
                         <tr>
                           <th> Index </th>
-                          <th> Class </th>
-                          <th> No. of Students </th>
-                          <th> No. of Classes </th>
-                          <th> Explore </th>
+                          <th> First Name </th>
+                          <th> Last Name </th>
+                          <th> No. of Assigned Subjects </th>
+                          <th> No. of Assigned Classes </th>
+                          <th> Option </th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($classes as $index => $class): ?>
+                        foreach ($teachers as $index => $teacher): ?>
                           <tr>
                             <td class="py-1">
                               <?= $index + 1; ?>
                             </td>
                             <td class="py-1">
-                              <?= $class['class']; ?>
+                              <?= $teacher['first_name']; ?>
+                            </td>
+                            <td class="py-1">
+                              <?= $teacher['last_name']; ?>
                             </td>
                             <td>
-                              <?= $class['student_no']; ?>
+                              <?= $teacher['subject_no']; ?>
                             </td>
                             <td>
-                              <?= $class['subject_no']; ?>
+                              <?= $teacher['classes_no']; ?>
                             </td>
                             <td>
                               <form action="subjects.php" method="post">
-                                <input type="hidden" name="class" value="<?= $class['class']; ?>">
+                                <input type="hidden" name="teacher_id" value="<?= $teacher['id']; ?>">
                                 <button type="submit" class="btn social-btn btn-rounded btn-social-outline-twitter">
                                   <i class="mdi mdi-settings"></i>
                                 </button>
