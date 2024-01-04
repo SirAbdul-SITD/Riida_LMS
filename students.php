@@ -387,6 +387,7 @@ require("settings.php");
                               <?php endforeach; ?>
                             </select>
 
+                            <input type="hidden" name="class_name" value=" <?= $class['class']; ?>">
                           </div>
                         </div>
                         <button id="add_student_form_button" type="submit" class="btn btn-inverse-success btn-sm"
@@ -433,7 +434,7 @@ require("settings.php");
                   $stmt->execute();
                   $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                  if (count($classes) === 0) {
+                  if (count($students) === 0) {
                     echo '<p class="text-center">None added Yet!</p>';
                   } else {
                     ?>
@@ -475,7 +476,6 @@ require("settings.php");
                               </button>
                             </td>
                           </tr>
-
                         <?php endforeach; ?>
                       </tbody>
                     </table>
