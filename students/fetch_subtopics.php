@@ -30,7 +30,7 @@ if (isset($data['selectedTopicId'])) {
             $userMessage = "generate 5 subtopics with a detailed explanation for each subtopic for this topic: '$topicName', let the response be in this json format: { 'subtopics': [ { 'name': '', 'status': 'Queued', 'content': '' } ] }. where the name is the topic name and the content is the detailed explanation you generated";
 
             // Your OpenAI API key
-            $api_key = "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";
+            $api_key = "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";
 
             // Data to send in the POST request
             $data = json_encode([

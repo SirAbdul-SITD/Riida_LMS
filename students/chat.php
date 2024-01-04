@@ -36,7 +36,7 @@ try {
 
 
       // Your OpenAI API key
-      $api_key = "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";
+      $api_key = "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";
 
       // Initialize or retrieve the conversation history from the PHP session
       $conversationHistory = isset($_SESSION['conversation_history']) ? $_SESSION['conversation_history'] : $_SESSION['conversation_history'] = $history;

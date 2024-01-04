@@ -13,7 +13,7 @@ try {
       $userMessage = "regenerate this content :'" . $content . "', but this time around use this instructions: '" .$message . "'.";
   
       // Your OpenAI API key
-      $api_key = "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";
+      $api_key = "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";
   
       // Data to send in the POST request
       $data = json_encode([
@@ -77,7 +77,7 @@ try {
       $userMessage = "regenerate this :'" . $content . "', but this time around use this instructions: '" .$message . "'.  return response in json format";
   
       // Your OpenAI API key
-      $api_key = "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";
+      $api_key = "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";
   
       // Data to send in the POST request
       $data = json_encode([

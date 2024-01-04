@@ -416,7 +416,7 @@ require("settings.php");
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-11">
-                      <h4 class="card-title">Classes</h4>
+                      <h4 class="card-title">Students</h4>
                     </div>
                     <div>
                       <div class="form-group">
