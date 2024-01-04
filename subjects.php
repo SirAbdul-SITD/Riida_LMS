@@ -297,14 +297,22 @@ if (isset($_POST['class'])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="students.php" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Students</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false" aria-controls="ui-3">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Subjects</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false"
+              aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
@@ -316,7 +324,7 @@ if (isset($_POST['class'])) {
               <span class="menu-title">Calendar</span>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link" href="notifications.php">
               <i class="menu-icon typcn typcn-bell"></i>
