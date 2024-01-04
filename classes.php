@@ -296,6 +296,13 @@ require("settings.php");
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Subjects</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false" aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>

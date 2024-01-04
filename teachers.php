@@ -348,13 +348,10 @@ require("settings.php");
               <div class="">
                 <div class="">
                   <div class="card-body d-flex flex-column">
-                    <form action="" id="add_class_form" method="post">
+                    <form action="" id="add_teacher_form" method="post">
                       <div class="add_new_teacher">
                         <p>Add New Teacher</p>
                         <div>
-
-
-
                           <div class="row  schedule_tab" id="schedule_tab">
                             <div class="col-md-6">
                               <div class="form-group">
@@ -385,13 +382,13 @@ require("settings.php");
                               <option selected disabled>None</option>
                               <?php
                               foreach ($classes as $class): ?>
-                                <option value="<?= $class['id']; ?>"> <?= $class['name']; ?></option>
+                                <option value="<?= $class['id']; ?>"> <?= $class['class']; ?></option>
                               <?php endforeach; ?>
                             </select>
 
                           </div>
                         </div>
-                        <button id="add_class_form_button" type="submit" class="btn btn-inverse-success btn-sm"
+                        <button id="add_teacher_form_button" type="submit" class="btn btn-inverse-success btn-sm"
                           style="width: 100%; height: 40px; border-radius: 10px;">Add Teacher</button>
                       </div>
                     </form>
@@ -519,16 +516,14 @@ require("settings.php");
 
 
 
-          document.getElementById("add_class_form_button").addEventListener("click", function (event) {
+          document.getElementById("add_teacher_form_button").addEventListener("click", function (event) {
             console.log('form submitted');
             event.preventDefault();
 
-
-
             $.ajax({
               type: 'POST',
-              url: 'add_class.php',
-              data: $('#add_class_form').serialize(),
+              url: 'add_teacher.php',
+              data: $('#add_teacher_form').serialize(),
               dataType: 'json',
               beforeSend: function () {
                 document.getElementById("loading-screen").style.display = "flex";

@@ -1,3 +1,7 @@
+<?php
+require("settings.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,25 +26,86 @@
   <link rel="stylesheet" href="assets/css/demo_1/style.css">
   <!-- End Layout styles -->
   <link rel="shortcut icon" href="assets/images/favicon.ico" />
+  <script src="jquery-3.6.4.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+
+  <style>
+    .card {
+      border-radius: 10px;
+    }
+
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      background-color: rgba(0, 10, 5, 0.8);
+      /* Background color with opacity */
+      color: #fff;
+    }
+
+    .popup.success {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+
+    .popup.error {
+      background-color: #F44336;
+      color: white;
+    }
+
+    .popup i {
+      margin-right: 5px;
+    }
+
+    #loading-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 1000;
+    }
+
+    #loading-screen img {
+      width: 200px;
+      border-radius: 70%;
+      height: 200px;
+      /* Adjust the height as needed */
+    }
+  </style>
 </head>
 
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <div></div>
-        <a class="navbar-brand brand-logo text-center" href="index.html"> 
-        <i class="fa fa-graduation-cap"></i>
-        <h3 style="font-weight: bold">Rinda LMS</h3> </a>
+        <a class="navbar-brand brand-logo text-center" href="index.html">
+          <i class="fa fa-graduation-cap"></i>
+          <h3 style="font-weight: bold">Rinda LMS</h3>
+        </a>
         <a class="navbar-brand brand-logo-mini" href="index.html">
-          <h3 style="font-weight: bold">Rinda LMS</h3> </a>
+          <h3 style="font-weight: bold">Rinda LMS</h3>
+        </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block">Help : support@rinda.strad.frica</li>
           <li class="nav-item dropdown language-dropdown">
-            <a class="nav-link dropdown-toggle px-2 d-flex align-items-center" id="LanguageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle px-2 d-flex align-items-center" id="LanguageDropdown" href="#"
+              data-toggle="dropdown" aria-expanded="false">
               <div class="d-inline-flex mr-0 mr-md-3">
                 <div class="flag-icon-holder">
                   <i class="flag-icon flag-icon-us"></i>
@@ -79,11 +144,13 @@
         </form>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link count-indicator" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link count-indicator" id="messageDropdown" href="#" data-toggle="dropdown"
+              aria-expanded="false">
               <i class="mdi mdi-bell-outline"></i>
               <span class="count">7</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
+              aria-labelledby="messageDropdown">
               <a class="dropdown-item py-3">
                 <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
                 <span class="badge badge-pill badge-primary float-right">View all</span>
@@ -123,7 +190,8 @@
               <i class="mdi mdi-email-outline"></i>
               <span class="count bg-success">3</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0"
+              aria-labelledby="notificationDropdown">
               <a class="dropdown-item py-3 border-bottom">
                 <p class="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
                 <span class="badge badge-pill badge-primary float-right">View all</span>
@@ -166,7 +234,8 @@
                 <p class="mb-1 mt-3 font-weight-semibold">Ahmad Isa</p>
                 <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
               </div>
-              <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i class="dropdown-item-icon ti-dashboard"></i></a>
+              <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i
+                  class="dropdown-item-icon ti-dashboard"></i></a>
               <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
               <a class="dropdown-item">Activity<i class="dropdown-item-icon ti-location-arrow"></i></a>
               <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
@@ -174,7 +243,8 @@
             </div>
           </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
         </button>
       </div>
@@ -198,288 +268,292 @@
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="index.php">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <i class="menu-icon typcn typcn-bell"></i>
-              <span class="menu-title">Apps</span>
+            <a class="nav-link" data-toggle="collapse" href="teachers.php" aria-expanded="false" aria-controls="ui-2">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Teachers</span>
+              <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-1" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="classes.php" aria-expanded="false" aria-controls="ui-1">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Classes</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Students</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-1">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-2" aria-expanded="false" aria-controls="ui-2">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Lectures</span>
+              <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-2">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All lectures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Process new lecture</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Edit lectures</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-3" aria-expanded="false" aria-controls="ui-3">
+            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false"
+              aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Exams</span>
+              <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-3">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All Exams</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Generate New</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Mark Assessments</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="calendar.php">
               <i class="menu-icon typcn typcn-shopping-bag"></i>
               <span class="menu-title">Calendar</span>
             </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <i class="menu-icon typcn typcn-th-large-outline"></i>
-              <span class="menu-title">Events</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
+            <a class="nav-link" href="notifications.php">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/icons/font-awesome.html">
+            <a class="nav-link" href="analytics.php">
               <i class="menu-icon typcn typcn-user-outline"></i>
-              <span class="menu-title">Chats</span>
+              <span class="menu-title">Analytics</span>
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon typcn typcn-document-add"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/login.html"> Login </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/register.html"> Register </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-404.html"> 404 </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
-                </li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Students</h4>
-                  <p class="card-description">From All Classes </p>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th> Reg No. </th>
-                        <th> Name </th>
-                        <th> Class </th>
-                        <th> Progress </th>
-                        <th> Explore </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24435
-                        </td>
-                        <td> Joseph Raynold </td>
-                        <td> Jss 2 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25"
-                              aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24684
-                        </td>
-                        <td> Adam Musa </td>
-                        <td> Jss 2 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 87%" aria-valuenow="87%"
-                              aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button></td>
-                      </tr>
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24267
-                        </td>
-                        <td> Edward Clark </td>
-                        <td> Jss 2 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 15%"
-                              aria-valuenow="15%" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button> </td>
-                      </tr>
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24023
-                        </td>
-                        <td> Mary Gana </td>
-                        <td> Jss 1 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 45%"
-                              aria-valuenow="45%" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button></td>
-                      </tr>
 
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24956
-                        </td>
-                        <td> Ransom Moses </td>
-                        <td> SSS 2 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%"
-                              aria-valuenow="85%" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button> </td>
-                      </tr>
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24487
-                        </td>
-                        <td> Nana Jibril </td>
-                        <td> Jss 2 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 79%"
-                              aria-valuenow="79%" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button></td>
-                      </tr>
 
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/29835
-                        </td>
-                        <td> Jacob Moses </td>
-                        <td> SSS 3 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%"
-                              aria-valuenow="85%" aria-valuemin="0" aria-valuemax="100"></div>
+      <?php
+      $query = "SELECT * FROM classes";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
+      $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      ?>
+
+      <!-- todo display modal -->
+      <div class="modal fade" id="add_new" tabindex="-1" aria-hidden="true" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="">
+                <div class="">
+                  <div class="card-body d-flex flex-column">
+                    <form action="" id="add_student_form" method="post">
+                      <div class="add_new_student">
+                        <p>Add New Student</p>
+                        <div>
+                          <div class="row  schedule_tab" id="schedule_tab">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="first_name">First Name</label>
+                                <input required style="border-radius: 10px; height: 40px" name="first_name"
+                                  class="form-control" type="text" placeholder="Enter First Name">
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="last_name">Last Name</label>
+                                <input required style="border-radius: 10px; height: 40px" name="last_name"
+                                  class="form-control" type="text" placeholder="Enter Last Name">
+                              </div>
+                            </div>
                           </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button> </td>
-                      </tr>
-                      <tr>
-                        <td class="py-1">
-                          NIS/JTG/019/24085
-                        </td>
-                        <td> Hana Jorge </td>
-                        <td> Jss 2 </td>
-                        <td>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 79%"
-                              aria-valuenow="79%" aria-valuemin="0" aria-valuemax="100"></div>
+
+                          <div class="form-group">
+                            <label for="adm_no">Admission No.</label>
+                            <input required style="border-radius: 10px; height: 40px" name="adm_no" class="form-control"
+                              type="text" placeholder="Enter Student's Admission No.">
                           </div>
-                        </td>
-                        <td><button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                            <i class="mdi mdi-settings"></i>
-                          </button></td>
-                      </tr>
-                    </tbody>
-                  </table>
+
+                          <div class="form-group">
+                            <label for="class_id">Assign Class</label>
+                            <select required style="border-radius: 10px; height: 40px" class="form-control"
+                              name="class_id">
+                              <option selected disabled>None</option>
+                              <?php
+                              foreach ($classes as $class): ?>
+                                <option value="<?= $class['id']; ?>"> <?= $class['class']; ?></option>
+                              <?php endforeach; ?>
+                            </select>
+
+                          </div>
+                        </div>
+                        <button id="add_student_form_button" type="submit" class="btn btn-inverse-success btn-sm"
+                          style="width: 100%; height: 40px; border-radius: 10px;">Add Student</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div id="loading-screen">
+            <img src="processing.gif" alt="Loading">
+            <p style="font-size: 17px">Adding New Teacher...</p>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-11">
+                      <h4 class="card-title">Classes</h4>
+                    </div>
+                    <div>
+                      <div class="form-group">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#add_new"
+                          style=" width: 40px; border-radius: 10px; height: 40px;"
+                          class=" align-items-center btn btn-icons btn-inverse-success">
+                          <i class="mdi mdi-plus"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <?php
+                  $query = "SELECT * FROM students ORDER BY `students`.`first_name` ASC";
+                  $stmt = $pdo->prepare($query);
+                  $stmt->execute();
+                  $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                  if (count($classes) === 0) {
+                    echo '<p class="text-center">None added Yet!</p>';
+                  } else {
+                    ?>
+
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th> Reg No. </th>
+                          <th> Name </th>
+                          <th> Class </th>
+                          <th> Progress </th>
+                          <th> Explore </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach ($students as $index => $student): ?>
+                          <tr>
+                            <td class="py-1">
+                              <?= $student['adm_no']; ?>
+                            </td>
+                            <td>
+                              <?= $student['first_name'] . ' ' . $student['last_name']; ?>
+                            </td>
+                            <td>
+                              <?= $student['class'] ?>
+                            </td>
+                            <td>
+                              <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar"
+                                  style="width: <?= $student['performance'] ?>%"
+                                  aria-valuenow="<?= $student['performance'] ?>" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
+                                <i class="mdi mdi-settings"></i>
+                              </button>
+                            </td>
+                          </tr>
+
+                        <?php endforeach; ?>
+                      </tbody>
+                    </table>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <script>
+          //Function to display a popup message
+          function displayPopup(message, success) {
+            var popup = document.createElement('div');
+            popup.className = 'popup ' + (success ? 'success' : 'error');
+
+            var iconClass = success ? 'fa fa-check-circle' : 'fa fa-times-circle';
+            var icon = document.createElement('i');
+            icon.className = iconClass;
+            popup.appendChild(icon);
+
+            var text = document.createElement('span');
+            text.textContent = message;
+            popup.appendChild(text);
+
+            document.body.appendChild(popup);
+
+            setTimeout(function () {
+              popup.remove();
+            }, 5000);
+          }
+
+
+
+
+          document.getElementById("add_student_form_button").addEventListener("click", function (event) {
+            console.log('form submitted');
+            event.preventDefault();
+
+            $.ajax({
+              type: 'POST',
+              url: 'add_student.php',
+              data: $('#add_student_form').serialize(),
+              dataType: 'json',
+              beforeSend: function () {
+                document.getElementById("loading-screen").style.display = "flex";
+                // Disable submit button and input fields
+                $('#add_new').modal('hide');
+              },
+              success: function (response) {
+                // Check the 'success' property in the response
+                if (response.success) {
+                  // Display success popup
+                  displayPopup(response.message, true);
+                  // Close the modal (adjust this based on your modal implementation)
+                  document.getElementById("loading-screen").style.display = "none";
+                } else {
+                  // Display error popup
+                  displayPopup(response.message, false);
+                }
+              },
+              error: function (error, xhr) {
+                // Display error popup for AJAX error
+                displayPopup('Error occurred during AJAX request', false);
+                console.error('Error:', error, xhr);
+                $('#add_new').modal('show');
+              },
+              complete: function () {
+                document.getElementById("loading-screen").style.display = "none";
+              },
+            });
+          });
+
+
+        </script>
+
+
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
@@ -487,7 +561,8 @@
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2023</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Rinda LMS Demo from <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management Software</a></span>
+                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management
+                Software</a></span>
           </div>
         </footer>
         <!-- partial -->
@@ -513,3 +588,5 @@
 </body>
 
 </html>
+
+

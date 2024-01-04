@@ -30,15 +30,15 @@ if (isset($_POST['new_class'])) {
 
     $add_one = 1;
 
-    $updateBalanceQuery = "UPDATE teachers SET classes_no = :classes_numbers + :add_one WHERE id = :teacher_id";
-    $updateBalanceStmt = $pdo->prepare($updateBalanceQuery);
-    $updateBalanceStmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_INT);
-    $updateBalanceStmt->bindParam(':classes_numbers', $classes_numbers, PDO::PARAM_INT);
-    $updateBalanceStmt->bindParam(':add_one', $add_one, PDO::PARAM_INT);
-    $updateBalanceStmt->execute();
+    $updateQuery = "UPDATE teachers SET classes_no = :classes_numbers + :add_one WHERE id = :teacher_id";
+    $updateStmt = $pdo->prepare($updateQuery);
+    $updateStmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_INT);
+    $updateStmt->bindParam(':classes_numbers', $classes_numbers, PDO::PARAM_INT);
+    $updateStmt->bindParam(':add_one', $add_one, PDO::PARAM_INT);
+    $updateStmt->execute();
 
     // Respond with a success message
-    $response = ['success' => true, 'response' => 'success', 'message' => 'New `Class: ' . $new_class . ' added successfully'];
+    $response = ['success' => true, 'response' => 'success', 'message' => 'New Class: ' . $new_class . ' added successfully'];
     echo json_encode($response);
     exit();
   } else {
@@ -49,7 +49,7 @@ if (isset($_POST['new_class'])) {
     $insertQ->execute();
 
 
-    $response = ['success' => true, 'response' => 'success', 'message' => 'New `Class: ' . $new_class . ' added successfully'];
+    $response = ['success' => true, 'response' => 'success', 'message' => 'New Class: ' . $new_class . ' added successfully'];
     echo json_encode($response);
     exit();
   }
