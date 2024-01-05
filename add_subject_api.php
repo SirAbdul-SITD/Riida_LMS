@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $class = $_POST['class'];
     $term = $_POST['term'];
     $subject = $_POST['subject'];
-    $tutor = $_POST['tutor'];
+    $teacher_id = $_POST['tutor'];
     $mode = $_POST['mode'];
 
     $topics = $_POST['topics'];
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':class', $class, PDO::PARAM_STR);
     $stmt->bindParam(':term', $term, PDO::PARAM_STR);
     $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-    $stmt->bindParam(':tutor', $tutor, PDO::PARAM_STR);
+    $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
     $stmt->bindParam(':mode', $mode, PDO::PARAM_STR);
     $stmt->bindParam(':topics_no', $topics_no, PDO::PARAM_INT);
     $stmt->bindParam(':schedule_no', $schedule_no, PDO::PARAM_INT);

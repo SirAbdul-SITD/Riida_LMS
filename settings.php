@@ -26,7 +26,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $database = "edurida";
-$tutor = 'Ahmad';
+$teacher_id = '1';
 
 try {
   $pdo = new PDO("mysql:host=$servername;dbname=$database;charset=utf8", $username, $password);

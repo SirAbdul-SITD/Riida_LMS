@@ -13,7 +13,7 @@ try {
       $userMessage = "regenerate this content :'" . $content . "', but this time around use this instructions: '" .$message . "'.";
   
       // Your OpenAI API key
-      $api_key = "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";
+      $api_key = "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";
   
       // Data to send in the POST request
       $data = json_encode([
@@ -21,7 +21,7 @@ try {
         'messages' => [
           [
             "role" => "system",
-            "content" => "You're an class teacher responsible for generating detailed topic content in easy explanations providing examples where needed.",
+            "content" => "You're an class teacher responsible for generating detailed lesson plan with step by step instructions on how to teach a given topic.",
           ],
           [
             'role' => 'user',
@@ -77,7 +77,7 @@ try {
       $userMessage = "regenerate this :'" . $content . "', but this time around use this instructions: '" .$message . "'.  return response in json format";
   
       // Your OpenAI API key
-      $api_key = "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";
+      $api_key = "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";
   
       // Data to send in the POST request
       $data = json_encode([

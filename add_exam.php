@@ -11,7 +11,7 @@ require("settings.php");
 //     $updateStmt->execute();
 //   }
 if (isset($_POST['assigned'])) {
-  $tutor = $_POST['assigned'];
+  $teacher_id = $_POST['assigned'];
 }
 
 ?>

@@ -274,7 +274,7 @@ if (isset($_POST['class'])) {
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="index.html">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -342,13 +342,13 @@ if (isset($_POST['class'])) {
       <?php
       $query = "SELECT * FROM assessments WHERE create_by = :tutor";
       $stmt = $pdo->prepare($query);
-      $stmt->bindParam(':tutor', $tutor, PDO::PARAM_STR);
+      $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
       $stmt->execute();
       $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       $query = "SELECT * FROM subjects WHERE tutor = :tutor";
       $stmt = $pdo->prepare($query);
-      $stmt->bindParam(':tutor', $tutor, PDO::PARAM_STR);
+      $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
       $stmt->execute();
       $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -438,7 +438,7 @@ if (isset($_POST['class'])) {
                             </div>
                           </div>
 
-                          <input type="hidden" name="tutor" value="<?= $tutor ?>">
+                          <input type="hidden" name="tutor" value="<?= $teacher_id ?>">
                           <input type="hidden" name="class" value="<?= $subjectItem['class'] ?>">
                           <input type="hidden" name="subject_id" value="<?= $subjectItem['id'] ?>">
 

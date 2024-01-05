@@ -8,7 +8,16 @@ try {
         $class = $_POST['class'];
         $term = $_POST['term'];
         $subject = $_POST['subject'];
-        $tutor = $_POST['tutor'];
+        $teacher_id = $_POST['teacher_id'];
+
+        $query = "SELECT * FROM teachers WHERE id = :teacher_id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $teachers = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        
+        $teacher_name = $teachers['first_name']. ' ' .$teachers['last_name'];
         $mode = $_POST['mode'];
 
         $topics = $_POST['topics'];
@@ -25,11 +34,12 @@ try {
         $schedule_no = count($schedule_times);
 
         // Execute the INSERT query for schedule_table
-        $stmt = $pdo->prepare("INSERT INTO subjects (class, term, subject, tutor, mode, topics_no, schedule_no) VALUES (:class, :term, :subject, :tutor, :mode, :topics_no, :schedule_no)");
+        $stmt = $pdo->prepare("INSERT INTO subjects (class, term, subject, teacher_id, teacher_name, mode, topics_no, schedule_no) VALUES (:class, :term, :subject, :teacher_id, :teacher_name, :mode, :topics_no, :schedule_no)");
         $stmt->bindParam(':class', $class, PDO::PARAM_STR);
         $stmt->bindParam(':term', $term, PDO::PARAM_STR);
         $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-        $stmt->bindParam(':tutor', $tutor, PDO::PARAM_STR);
+        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
+        $stmt->bindParam(':teacher_name', $teacher_name, PDO::PARAM_STR);
         $stmt->bindParam(':mode', $mode, PDO::PARAM_STR);
         $stmt->bindParam(':topics_no', $topics_no, PDO::PARAM_STR);
         $stmt->bindParam(':schedule_no', $schedule_no, PDO::PARAM_STR);
@@ -63,10 +73,10 @@ try {
 
                 $lastInsertedTopicId = $pdo->lastInsertId();
 
-                $userMessage = "Generate detailed content for this: " . $topic;
+                $userMessage = "Generate detailed steps on how to effectively teach this topic: " . $topic . " to " .$class . " pupils";
 
                 // Your OpenAI API key
-                $api_key = "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";
+                $api_key = "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";
 
                 // Data to send in the POST request
                 $data = json_encode([
@@ -74,7 +84,7 @@ try {
                     'messages' => [
                         [
                             "role" => "system",
-                            "content" => "You're an class teacher responsible for generating detailed topic content in easy explanations providing examples where needed.",
+                            "content" => "You're an class teacher responsible for generating detailed lesson plan with step by step instructions on how to teach a given topic.",
                         ],
                         [
                             'role' => 'user',

@@ -277,7 +277,7 @@ if (isset($_POST['class'])) {
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="index.html">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -342,11 +342,10 @@ if (isset($_POST['class'])) {
 
 
       <?php
-      // $query = "SELECT * FROM terms";
-      // $stmt = $pdo->prepare($query);
-      // // $stmt->bindParam(':class', $class, PDO::PARAM_STR);
-      // $stmt->execute();
-      // $terms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $query = "SELECT * FROM teachers";
+      $stmt = $pdo->prepare($query);
+      $stmt->execute();
+      $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
       
       $query = "SELECT * FROM classes";
       $stmt = $pdo->prepare($query);
@@ -472,10 +471,13 @@ if (isset($_POST['class'])) {
                           </div>
 
                           <div class="form-group">
-                            <label for="tutor">Tutor</label>
-                            <select style="border-radius: 10px; height: 40px" class="form-control" name="tutor">
-                              <option disabled selected>Select</option>
-                              <option>Ahmad</option>
+                            <label for="teacher_id">Assign Teacher <small style="color:grey">optional</small></label>
+                            <select style="border-radius: 10px; height: 40px" class="form-control" name="teacher_id">
+                              <option selected disabled>None</option>
+                              <?php
+                              foreach ($teachers as $teacher): ?>
+                                <option value="<?= $teacher['id']; ?>"> <?= $teacher['first_name'] . ' ' . $teacher['last_name']; ?></option>
+                              <?php endforeach; ?>
                             </select>
                           </div>
 
@@ -638,7 +640,7 @@ if (isset($_POST['class'])) {
                               <?= $Subject['topics_no']; ?> Topics
                             </td>
                             <td>
-                              <?= $Subject['tutor']; ?>
+                              <?= $Subject['teacher_name']; ?>
                             </td>
                             <td>
                               <div class="progress">
@@ -750,8 +752,7 @@ if (isset($_POST['class'])) {
               beforeSend: function () {
                 document.getElementById("loading-screen").style.display = "flex";
                 // Disable submit button and input fields
-                $('#add_subject_form_button').prop('disabled', true);
-                $('#add_subject_form :input').prop('disabled', true);
+                $('#add_new').modal('hide');
               },
               success: function (response) {
                 // Check the 'success' property in the response
@@ -769,12 +770,11 @@ if (isset($_POST['class'])) {
                 // Display error popup for AJAX error
                 displayPopup('Error occurred during AJAX request', false);
                 console.error('Error:', error, xhr);
+                $('#add_new').modal('show');
               },
               complete: function () {
                 document.getElementById("loading-screen").style.display = "none";
-                // Enable submit button and input fields after AJAX request is complete
-                $('#add_subject_form_button').prop('disabled', false);
-                $('#add_subject_form :input').prop('disabled', false);
+                
               },
             });
           });

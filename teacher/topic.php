@@ -9,7 +9,7 @@ if (isset($_POST['new_subject'])) {
   $updateStmt = $pdo->prepare($updateQuery);
   $updateStmt->bindParam(':subject', $new_subject, PDO::PARAM_STR);
   $updateStmt->bindParam(':class', $class, PDO::PARAM_STR);
-  $updateStmt->bindParam(':assigned', $tutor, PDO::PARAM_STR);
+  $updateStmt->bindParam(':assigned', $teacher_id, PDO::PARAM_STR);
   $updateStmt->execute();
 
   $amount = 1;
@@ -252,7 +252,7 @@ if (isset($_GET['id'])) {
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="profile-image">
-                <img class="img-xs rounded-circle" src="../assets/images/faces/face8.jpg" alt="profile image">
+                <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="profile image">
                 <div class="dot-indicator bg-success"></div>
               </div>
               <div class="text-wrapper">
@@ -269,120 +269,37 @@ if (isset($_GET['id'])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <i class="menu-icon typcn typcn-bell"></i>
-              <span class="menu-title">Apps</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-1" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Students</span>
+              <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-1">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-2" aria-expanded="false" aria-controls="ui-2">
+            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false"
+              aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Lectures</span>
+              <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-2">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All lectures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Process new lecture</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Edit lectures</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-3" aria-expanded="false" aria-controls="ui-3">
-              <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Exams</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-3">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All Exams</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Generate New</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Mark Assessments</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="calendar.php">
               <i class="menu-icon typcn typcn-shopping-bag"></i>
               <span class="menu-title">Calendar</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <i class="menu-icon typcn typcn-th-large-outline"></i>
-              <span class="menu-title">Events</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
+            <a class="nav-link" href="notifications.php">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/icons/font-awesome.html">
+            <a class="nav-link" href="analytics.php">
               <i class="menu-icon typcn typcn-user-outline"></i>
-              <span class="menu-title">Chats</span>
+              <span class="menu-title">Analytics</span>
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon typcn typcn-document-add"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/login.html"> Login </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/register.html"> Register </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-404.html"> 404 </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
-                </li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>

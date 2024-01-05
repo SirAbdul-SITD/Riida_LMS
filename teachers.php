@@ -269,7 +269,7 @@ require("settings.php");
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="index.html">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -446,8 +446,8 @@ require("settings.php");
                           <th> Index </th>
                           <th> First Name </th>
                           <th> Last Name </th>
-                          <th> No. of Assigned Subjects </th>
-                          <th> No. of Assigned Classes </th>
+                          <th> Assigned Subjects </th>
+                          <th> Assigned Classes </th>
                           <th> Option </th>
                         </tr>
                       </thead>

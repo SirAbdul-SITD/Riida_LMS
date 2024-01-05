@@ -9,7 +9,7 @@ if (isset($_POST['new_subject'])) {
   $updateStmt = $pdo->prepare($updateQuery);
   $updateStmt->bindParam(':subject', $new_subject, PDO::PARAM_STR);
   $updateStmt->bindParam(':class', $class, PDO::PARAM_STR);
-  $updateStmt->bindParam(':assigned', $tutor, PDO::PARAM_STR);
+  $updateStmt->bindParam(':assigned', $teacher_id, PDO::PARAM_STR);
   $updateStmt->execute();
 
   $amount = 1;

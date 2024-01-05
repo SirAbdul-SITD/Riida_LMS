@@ -36,6 +36,7 @@ if (isset($_GET['id'])) {
   <!-- End Layout styles -->
   <link rel="shortcut icon" href="assets/images/favicon.ico" />
   <script src="jquery-3.6.4.min.js"></script>
+  <script src="bootstrap.min.js"></script>
 
   <style>
     .card {
@@ -233,7 +234,7 @@ if (isset($_GET['id'])) {
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="index.html">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -312,6 +313,10 @@ if (isset($_GET['id'])) {
           $stmt->execute();
           $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+          $query = "SELECT * FROM teachers";
+          $stmt = $pdo->prepare($query);
+          $stmt->execute();
+          $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
           $query = "SELECT content FROM topics WHERE subject_id = :subject_id";
           $stmt = $pdo->prepare($query);
@@ -327,7 +332,7 @@ if (isset($_GET['id'])) {
 
           ?>
 
-          <form id="subject_form" action="" method="post">
+          <form id="subject_form">
             <div class="row" style=" margin-top: 10px;">
               <div class="col-md-7 grid-margin ">
                 <div class="card">
@@ -376,12 +381,19 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="form-group">
-                          <label for="mode">Tutor</label>
-                          <select style="border-radius: 10px; height: 40px" class="form-control" name="tutor">
-                            <option disabled selected value="<?= $subjects['tutor']; ?>"><?= $subjects['tutor']; ?>
+                          <label for="teacher_id">Assign Teacher</label>
+                          <select style="border-radius: 10px; height: 40px" class="form-control" name="teacher_id">
+                            <option selected>
+                              <?= $subjects['teacher_name']; ?>
                             </option>
+                            <?php foreach ($teachers as $teacher): ?>
+                              <?php if ($teacher['id'] != $subjects['teacher_id']): ?>
+                                <option value="<?= $teacher['id']; ?>"> <?= $teacher['first_name'] . ' ' . $teacher['last_name']; ?></option>
+                              <?php endif; ?>
+                            <?php endforeach; ?>
                           </select>
                         </div>
+
 
 
                         <?php foreach ($schedules as $index => $schedule): ?>
@@ -395,8 +407,8 @@ if (isset($_GET['id'])) {
                                   $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                                   foreach ($daysOfWeek as $day) {
                                     $selected = ($day == $schedule['schedule_day']) ? 'selected' : '';
-                                    $disabled = ($index < 1 && $day == $schedule['schedule_day']) ? 'disabled' : '';
-                                    echo "<option $selected $disabled>$day</option>";
+                                    // $disabled = ($index < 1 && $day == $schedule['schedule_day']) ? 'disabled' : '';
+                                    echo "<option $selected>$day</option>";
                                   }
                                   ?>
                                 </select>
@@ -444,16 +456,16 @@ if (isset($_GET['id'])) {
                           <label for="mode">Mode</label>
                           <select style="border-radius: 10px; height: 40px" class="form-control" name="mode">
                             <option disabled>Select</option>
-                            <option disabled selected value="<?= $subjects['mode']; ?>"><?= $subjects['mode']; ?>
-                            </option>
-                            <?php $mode = ($subjects['mode'] == 'Physical') ? 'Physical' : 'Virtual'; ?>
-                            <option value="<?= $mode ?>"><?= $mode ?></option>
+                            <?php $mode = $subjects['mode']; ?>
+                            <option <?= ($mode == 'Physical') ? 'selected' : ''; ?> value="Physical">Physical</option>
+                            <option <?= ($mode == 'Virtual') ? 'selected' : ''; ?> value="Virtual">Virtual</option>
                           </select>
                         </div>
+                        <input type="hidden" name="subject_id" value="<?= $subjects['id']; ?>">
                       </div>
-                      <button type="submit" class="btn btn-inverse-success btn-sm"
-                        style="width: 100%; height: 40px; border-radius: 10px;">Generate
-                        Assessment</button>
+                      <button id="updateSubject" class="btn btn-inverse-success btn-sm"
+                        style="width: 100%; height: 40px; border-radius: 10px;">Save Changes
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -463,7 +475,7 @@ if (isset($_GET['id'])) {
         </div>
 
 
-        <script src="jquery-3.6.4.min.js"></script>
+
         <script>
             Function to display a popup message
           function displayPopup(message, success) {
@@ -487,14 +499,43 @@ if (isset($_GET['id'])) {
           }
 
 
-          document.getElementById("form_button").addEventListener("click", function () {
+          document.getElementById("updateSubject").addEventListener("click", function () {
+            event.preventDefault(); // Stop the default form submission
+
             $.ajax({
               type: 'POST',
-              url: 'suggest.php',
+              url: 'update_subject_data.php',
               data: $('#subject_form').serialize(),
               dataType: 'json',
+              beforeSend: function () {
+                document.getElementById("loading-screen").style.display = "flex";
+                $('#subject_form').modal('hide');
+              },
+              success: function (response) {
+                // Check the 'success' property in the response
+                if (response.success) {
+                  // Display success popup
+                  displayPopup(response.message, true);
+                  // Close the modal (adjust this based on your modal implementation)
+                  document.getElementById("loading-screen").style.display = "none";
+                } else {
+                  // Display error popup
+                  displayPopup(response.message, false);
+                }
+              },
+              error: function (error, xhr) {
+                // Display error popup for AJAX error
+                displayPopup('Error occurred during AJAX request', false);
+                console.error('Error:', error, xhr);
+                $('#subject_form').modal('show');
+              },
+              complete: function () {
+                document.getElementById("loading-screen").style.display = "none";
+              },
             });
           });
+
+
         </script>
         <!-- content-wrapper ends -->
 

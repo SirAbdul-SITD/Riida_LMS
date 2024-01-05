@@ -78,7 +78,7 @@ try {
   //  "merge this. to fit into this content: properly";
 
     // Your OpenAI API key
-    $api_key = "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";
+    $api_key = "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";
 
     // Data to send in the POST request
     $data = json_encode([

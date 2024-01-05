@@ -36,7 +36,7 @@ try {
 
 
       // Your OpenAI API key
-      $api_key = "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";
+      $api_key = "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";
 
       // Initialize or retrieve the conversation history from the PHP session
       $conversationHistory = isset($_SESSION['conversation_history']) ? $_SESSION['conversation_history'] : $_SESSION['conversation_history'] = $history;
@@ -48,7 +48,7 @@ try {
         'messages' => [
           [
             "role" => "system",
-            "content" => "You're a casual teacher for grade 7 students, make use of the provided conversation history to provide your next response",
+            "content" => "You're a casual teacher for grade 3 students given responses in a very simple terms which children can understand easily, make use of the provided conversation history to provide your next response. you can also make funny remarks time to time not just always.",
           ],
           [
             'role' => 'user',
