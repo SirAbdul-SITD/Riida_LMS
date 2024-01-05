@@ -153,14 +153,15 @@ try {
       $response = ['success' => true, 'response' => 'success', 'message' => 'Changes Saved Successfully'];
       echo json_encode($response);
     } elseif (isset($_POST['original'])) {
-      $lesson_content = $_POST['original'];
-      $lesson_content = $_POST['generated_content'];
-      $lesson_id = $_POST['lesson_id'];
+      $topic_content = $_POST['original'];
+      $lesson_plan = $_POST['generated_content'];
+      $topic_id = $_POST['lesson_id'];
 
-      $InsertStmt = $pdo->prepare("INSERT INTO `lesson_plan` (`topic_id`, `class`) VALUES (:subject, :class)");
+      $InsertStmt = $pdo->prepare("INSERT INTO `lesson_plan` (`topic_id`, `topic_content`, `lesson_plan`) VALUES (:topic_id, :topic_content, :lesson_plan)");
 
-      $InsertStmt->bindParam(':generated_content', $generated_content, PDO::PARAM_STR);
-      $InsertStmt->bindParam(':lesson_id', $lesson_id, PDO::PARAM_INT);
+      $InsertStmt->bindParam(':topic_content', $topic_content, PDO::PARAM_STR);
+      $InsertStmt->bindParam(':lesson_plan', $lesson_plan, PDO::PARAM_STR);
+      $InsertStmt->bindParam(':topic_id', $topic_id, PDO::PARAM_INT);
       $InsertStmt->execute();
 
 
