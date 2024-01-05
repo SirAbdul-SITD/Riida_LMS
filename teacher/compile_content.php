@@ -160,7 +160,7 @@ try {
       $InsertStmt = $pdo->prepare("INSERT INTO `lesson_plan` (`topic_id`, `class`) VALUES (:subject, :class)");
 
       $InsertStmt->bindParam(':generated_content', $generated_content, PDO::PARAM_STR);
-      $InsertStmt->bindParam(':lesson_id', $$lesson_id, PDO::PARAM_INT);
+      $InsertStmt->bindParam(':lesson_id', $lesson_id, PDO::PARAM_INT);
       $InsertStmt->execute();
 
 
