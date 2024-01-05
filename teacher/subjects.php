@@ -289,9 +289,9 @@ if (isset($_POST['class'])) {
 
 
         <?php
-        $query = "SELECT * FROM assessments WHERE create_by = :create_by ORDER BY `assessments`.`date` ASC";
+        $query = "SELECT * FROM assessments WHERE teacher_id = :teacher_id ORDER BY `assessments`.`date` ASC";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':create_by', $teacher_id, PDO::PARAM_STR);
+        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
         $stmt->execute();
         $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -420,9 +420,9 @@ if (isset($_POST['class'])) {
 
                         <?php
 
-                        $query = "SELECT * FROM Subjects WHERE teacher_id = :assigned ORDER BY `Subjects`.`Subject` ASC";
+                        $query = "SELECT * FROM Subjects WHERE teacher_id = :teacher_id ORDER BY `Subjects`.`Subject` ASC";
                         $stmt = $pdo->prepare($query);
-                        $stmt->bindParam(':assigned', $teacher_id, PDO::PARAM_STR);
+                        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
                         $stmt->execute();
                         $Subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -493,13 +493,18 @@ if (isset($_POST['class'])) {
 
               <div class="col-md-4">
                 <div class="col-md-12 grid-margin">
-                  <h5>Upcoming Classes This Week</h5>
+                  <h5>Upcoming Classes</h5>
                   <?php
                   $query = "SELECT * FROM class_schedule WHERE tutor = :tutor ORDER BY `class_schedule`.`schedule_day` ASC";
                   $stmt = $pdo->prepare($query);
                   $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
                   $stmt->execute();
                   $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                  if (count($schedules) === 0) {
+                    echo '<p class="text-center" style="padding-top: 15%;">You have no upcoming classes</p>';
+
+                  } else {
 
                   foreach ($schedules as $index => $schedule):
                     // Only display the first 3 assessments
@@ -544,7 +549,7 @@ if (isset($_POST['class'])) {
                         </p>
                       </a>
                     </div>
-                  <?php endif; ?>
+                  <?php endif; } ?>
                 </div>
               </div>
             </div>

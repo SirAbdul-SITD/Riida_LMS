@@ -4,7 +4,7 @@ require("../settings.php");
 if (isset($_POST['new_subject'])) {
   $class = $_POST['new_class'];
   $new_subject = $_POST['new_subject'];
-  
+
   $updateQuery = "INSERT INTO `subjects` (`subject`, `class`, `assigned`) VALUES (:subject, :class, :assigned)";
   $updateStmt = $pdo->prepare($updateQuery);
   $updateStmt->bindParam(':subject', $new_subject, PDO::PARAM_STR);
@@ -67,17 +67,25 @@ if (isset($_GET['id'])) {
       animation: 2s fade-in-out;
     }
 
-    #loadingScreen {
-      position: fixed;
-      top: 50%;
-      left: 60%;
-      transform: translate(-50%, -50%);
+    #loading-screen {
       display: none;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      z-index: 9999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 1000;
+    }
+
+    #loading-screen img {
+      width: 200px;
+      border-radius: 70%;
+      height: 200px;
+      /* Adjust the height as needed */
     }
   </style>
 
@@ -89,11 +97,13 @@ if (isset($_GET['id'])) {
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <div></div>
-        <a class="navbar-brand brand-logo text-center" href="index.html"> 
-        <i class="fa fa-graduation-cap"></i>
-        <h3 style="font-weight: bold">Rinda LMS</h3> </a>
+        <a class="navbar-brand brand-logo text-center" href="index.html">
+          <i class="fa fa-graduation-cap"></i>
+          <h3 style="font-weight: bold">Rinda LMS</h3>
+        </a>
         <a class="navbar-brand brand-logo-mini" href="index.html">
-          <h3 style="font-weight: bold">Rinda LMS</h3> </a>
+          <h3 style="font-weight: bold">Rinda LMS</h3>
+        </a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav">
@@ -307,7 +317,10 @@ if (isset($_GET['id'])) {
       <div class="main-panel">
         <div class="content-wrapper">
 
-        <div id="loadingScreen">Generating... May take a while</div>
+          <div id="loading-screen">
+            <img src="processing.gif" alt="Loading">
+            <p style="font-size: 17px">Generating Lesson Plan... May take upto a minute</p>
+          </div>
 
 
 
@@ -331,13 +344,16 @@ if (isset($_GET['id'])) {
                 <div class="card-body col-md-12 align-self-center">
                   <div class=" align-content-start">
                     <!-- Align content to left -->
-                    <form method="GET" id="compileform">
+                    <form>
                       <div class="form-group">
                         <label for="exampleTextarea1">Edit topic contents</label>
                         <textarea style="border-radius: 10px;" class="form-control" id="content" name="content"
-                         rows="32"></textarea>
-                         <input type="hidden" name="original" id="original">
-                         <input type="hidden" name="generated_content" id="generated_content">
+                          rows="32"></textarea>
+                        <form id="compileform">
+                          <input type="hidden" name="original" id="original">
+                          <input type="hidden" name="generated_content" id="generated_content">
+                          <input type="hidden" name="lesson_id" id="lesson_id">
+                        </form>
                       </div>
 
                       <button id="compile" type="submit" class="btn btn-inverse-success btn-sm" style="width: 100%">Save
@@ -353,7 +369,9 @@ if (isset($_GET['id'])) {
                 <div class="card-body d-flex flex-column">
                   <div class="wrapper">
                     <div class="row">
-                      <p style="font-weight: 800;" class="col-md-10"><?= $subject ?></p>
+                      <p style="font-weight: 800;" class="col-md-10">
+                        <?= $subject ?>
+                      </p>
                       <button type="submit" class="btn btn-inverse-success" style="padding: 1% 2% 1% 3%;"> <i
                           class="fa fa-save"></i></button>
                     </div>
@@ -372,11 +390,12 @@ if (isset($_GET['id'])) {
                       <!-- implement display none/block -->
 
                       <hr style=" margin: 0px">
-                        <center>
-                          <p class="align-text-center" style="font-size: small; padding: 0%; margin: 0px;">Schedule a class
-                            </p>
-                        </center>
-                        <hr style=" margin-top: 0px">
+                      <center>
+                        <p class="align-text-center" style="font-size: small; padding: 0%; margin: 0px;">Schedule a
+                          class
+                        </p>
+                      </center>
+                      <hr style=" margin-top: 0px">
 
 
                       <div style="display: block">
@@ -419,13 +438,15 @@ if (isset($_GET['id'])) {
                         <hr style=" margin-top: 0px">
 
                         <input type="hidden" name="topicContent" id="topicContent">
-                       
+
                         <div class="form-group">
                           <label for="focus">What do you want to modify?</label>
-                          <textarea style="border-radius: 10px;" class="form-control" id="message" name="message" rows="9"
+                          <textarea style="border-radius: 10px;" class="form-control" id="message" name="message"
+                            rows="9"
                             placeholder="E.g. Spread the number of examples across the sub-topics evenly..."></textarea>
                         </div>
-                        <button type="submit" id="regenerate" class="btn btn-inverse-success btn-sm" style="width: 100%">Re-Generate
+                        <button type="submit" id="regenerate" class="btn btn-inverse-success btn-sm"
+                          style="width: 100%">Re-Generate
                           Content</button>
                       </div>
 
@@ -494,10 +515,12 @@ if (isset($_GET['id'])) {
                 data: { 'topic_id': selectedValue },
                 dataType: 'json',
                 beforeSend: function () {
+                  document.getElementById("loading-screen").style.display = "flex";
                   // Show loading icon or perform any pre-request actions
                 },
                 success: function (response) {
                   if (response.success) {
+                    displayPopup(response.message, true);
                     console.log(response.content);
                     var textarea = document.getElementById("content");
                     textarea.value = response.content;
@@ -505,6 +528,8 @@ if (isset($_GET['id'])) {
                     hiddendiv.value = response.content;
                     var original = document.getElementById("original");
                     original.value = response.content;
+                    var lesson_id = document.getElementById("lesson_id");
+                    lesson_id.value = response.id;
                     // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);
@@ -516,7 +541,7 @@ if (isset($_GET['id'])) {
                   // Handle AJAX errors here
                 },
                 complete: function () {
-                  // Disable loading icon or perform any post-request actions
+                  document.getElementById("loading-screen").style.display = "none";
                 },
               });
             });
@@ -526,13 +551,13 @@ if (isset($_GET['id'])) {
           $(document).ready(function () {
             document.getElementById("regenerate").addEventListener("click", function () {
               event.preventDefault();
-            $.ajax({
-              type: 'POST',
-              url: 'update_content.php',
-              data: $('#formMode').serialize(),
-              dataType: 'json',
+              $.ajax({
+                type: 'POST',
+                url: 'update_content.php',
+                data: $('#formMode').serialize(),
+                dataType: 'json',
                 beforeSend: function () {
-                  $('#loadingScreen').show();
+                  document.getElementById("loading-screen").style.display = "flex";
                 },
                 success: function (response) {
                   if (response.success) {
@@ -543,10 +568,10 @@ if (isset($_GET['id'])) {
                     hidden.value = response.content;
                     var generated_content = document.getElementById("generated_content");
                     generated_content.value = response.content;
-                    
+
 
                     var compile_button = document.getElementById("compile");
-                    compile_button.innerText = "Compile";
+                    compile_button.innerText = "save";
                     // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);
@@ -558,7 +583,7 @@ if (isset($_GET['id'])) {
                   // Handle AJAX errors here
                 },
                 complete: function () {
-                  $('#loadingScreen').hide();
+                  document.getElementById("loading-screen").style.display = "none";
                 },
               });
             });
@@ -571,13 +596,13 @@ if (isset($_GET['id'])) {
           $(document).ready(function () {
             document.getElementById("compile").addEventListener("click", function () {
               event.preventDefault();
-            $.ajax({
-              type: 'POST',
-              url: 'compile_content.php',
-              data: $('#compileform').serialize(),
-              dataType: 'json',
+              $.ajax({
+                type: 'POST',
+                url: 'compile_content.php',
+                data: $('#compileform').serialize(),
+                dataType: 'json',
                 beforeSend: function () {
-                  $('#loadingScreen').show();
+                  document.getElementById("loading-screen").style.display = "flex";
                 },
                 success: function (response) {
                   if (response.success) {
@@ -599,7 +624,7 @@ if (isset($_GET['id'])) {
                   // Handle AJAX errors here
                 },
                 complete: function () {
-                  $('#loadingScreen').hide();
+                  document.getElementById("loading-screen").style.display = "none";
                 },
               });
             });
@@ -615,7 +640,8 @@ if (isset($_GET['id'])) {
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2023</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Rinda LMS Demo from <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management Software</a></span>
+                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School Management
+                Software</a></span>
           </div>
         </footer>
         <!-- partial -->

@@ -152,6 +152,23 @@ try {
       // Echo the success response outside the foreach loop
       $response = ['success' => true, 'response' => 'success', 'message' => 'Changes Saved Successfully'];
       echo json_encode($response);
+    } elseif (isset($_POST['original'])) {
+      $lesson_content = $_POST['original'];
+      $lesson_content = $_POST['generated_content'];
+      $lesson_id = $_POST['lesson_id'];
+
+      $stmtUpdate = $pdo->prepare("UPDATE topics 
+                            SET content = :generated_content,        
+                            WHERE id = :$lesson_id");
+
+      $stmtUpdate->bindParam(':generated_content', $generated_content, PDO::PARAM_STR);
+      $stmtUpdate->bindParam(':$lesson_id', $$lesson_id, PDO::PARAM_INT);
+      $stmtUpdate->execute();
+
+
+      // Echo the success response outside the foreach loop
+      $response = ['success' => true, 'response' => 'success', 'message' => 'Changes Saved Successfully'];
+      echo json_encode($response);
     }
 
 

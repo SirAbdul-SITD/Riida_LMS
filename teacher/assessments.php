@@ -318,15 +318,15 @@ if (isset($_POST['class'])) {
 
 
       <?php
-      $query = "SELECT * FROM assessments WHERE create_by = :tutor";
+      $query = "SELECT * FROM assessments WHERE teacher_id = :teacher_id";
       $stmt = $pdo->prepare($query);
-      $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
+      $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
       $stmt->execute();
       $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-      $query = "SELECT * FROM subjects WHERE teacher_id = :tutor";
+      $query = "SELECT * FROM subjects WHERE teacher_id = :teacher_id";
       $stmt = $pdo->prepare($query);
-      $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
+      $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
       $stmt->execute();
       $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -598,17 +598,16 @@ if (isset($_POST['class'])) {
                 data: $('#generate_form').serialize(),
                 dataType: 'json',
                 beforeSend: function () {
-                  $('#generate').prop('disabled', true);
-                  $('#generate_form :input').prop('disabled', true);
+                  // $('#generate').prop('disabled', true);
+                  // $('#generate_form :input').prop('disabled', true);
                   $('#loadingScreen').show();
+                   $('#add_new').modal('hide');
                 },
-                success: function (response) {
+                success: function (response) { 
+                  $('#loadingScreen').hide();
                   if (response.success) {
                     console.log(response.content);
                     displayPopup(response.message, true);
-                    // $('#loadingScreen').hide();
-                    // $('#add_new').modal('hide');
-                    // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);
                     displayPopup(response.message, false);
@@ -616,6 +615,8 @@ if (isset($_POST['class'])) {
                 },
 
                 error: function (error, xhr) {
+                  $('#loadingScreen').hide();
+                   $('#add_new').modal('show');
                   console.error('Error:', error, xhr);
                   displayPopup('Error occurred during AJAX request', false);
                   // Handle AJAX errors here
@@ -624,8 +625,6 @@ if (isset($_POST['class'])) {
                   // Disable loading icon or perform any post-request actions
                   $('#loadingScreen').hide();
                   $('#add_new').modal('hide');
-                  $('#generate').prop('disabled', false);
-                  $('#generate_form :input').prop('disabled', false);
                 },
               });
             });
