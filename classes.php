@@ -277,7 +277,7 @@ require("settings.php");
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" aria-expanded="false">
+            <a class="nav-link" href="teachers.php" aria-expanded="false">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Teachers</span>
               <i class="menu-arrow"></i>
