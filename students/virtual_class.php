@@ -1176,7 +1176,7 @@ if (isset($_GET['id'])) {
               });
             });
 
-            // Retrieve the required elements
+            // // Retrieve the required elements
             const subtopicsTab = document.getElementById('subtopics_tab');
             subtopicsTab.addEventListener('click', function () {
               const hiddenInput = subtopicsTab.querySelector('.subtopic_title');
@@ -1185,6 +1185,25 @@ if (isset($_GET['id'])) {
               console.log(messagesHistory);
             });
 
+            // Retrieve the required elements
+            // const subtopicsContainer = document.getElementById('subtopics_tab');
+            // subtopicsContainer.addEventListener('click', function (event) {
+            //     // Check if the clicked element or its parent has the 'subtopic_title' class
+            //     const clickedSubtopic = event.target.classList.contains('subtopic_title') ? event.target : event.target.closest('.subtopic_title');
+
+            //     if (clickedSubtopic) {
+            //         const hiddenInputValue = clickedSubtopic.value;
+
+            //         // Parse the JSON value to get the subtopic object
+            //         const subtopicObject = JSON.parse(hiddenInputValue);
+
+            //         // Access the content property of the subtopic
+            //         const subtopicContent = subtopicObject.content;
+
+            //         // Use subtopicContent as needed (e.g., display it, process it, etc.)
+            //         console.log(subtopicContent);
+            //     }
+            // });
 
           });
 

@@ -93,11 +93,11 @@ if (isset($data['selectedTopicId'])) {
 
                 // Decode the API response
                 $subtopicData = json_decode($rinda_response, true);
-
+                $subtopics = json_encode($subtopicData);
                 // Update the database with the received subtopics
                 $query = "UPDATE topics SET subtopics = :subtopics WHERE id = :topic_id";
                 $stmt = $pdo->prepare($query);
-                $stmt->bindParam(':subtopics', json_encode($subtopicData), PDO::PARAM_STR);
+                $stmt->bindParam(':subtopics', $subtopics, PDO::PARAM_STR);
                 $stmt->bindParam(':topic_id', $id, PDO::PARAM_INT);
                 $stmt->execute();
 

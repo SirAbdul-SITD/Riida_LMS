@@ -11,7 +11,7 @@ require("../settings.php");
 //     $updateStmt->execute();
 //   }
 
-$class = 'SSS 1';
+$class = 'Grade 3';
 
 
 ?>
@@ -51,9 +51,19 @@ $class = 'SSS 1';
     }
 
     .schedules :hover {
-      background-color: blue;
+      background-color: lightseagreen;
       border-radius: 15px;
       animation: 2s fade-in-out;
+    }
+
+    .schedules {
+      background-color: black;
+      border-radius: 10px;
+      animation: 2s fade-in-out;
+    }
+
+    .schedules a {
+      text-decoration: none;
     }
   </style>
 </head>
@@ -397,7 +407,7 @@ $class = 'SSS 1';
                           <th>Class</th>
                           <th> No. of topics </th>
                           <th> Progress </th>
-                          <th> More </th>
+                          <th> Learn </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -440,7 +450,7 @@ $class = 'SSS 1';
             </div>
             <div class="col-md-4">
               <div class="col-md-12 grid-margin">
-                <h5>Homework</h5>
+                <h5>Assessments</h5>
                 <?php
                 $query = "SELECT * FROM assessments WHERE class = :class ORDER BY `assessments`.`date` ASC";
                 $stmt = $pdo->prepare($query);
@@ -448,43 +458,42 @@ $class = 'SSS 1';
                 $stmt->execute();
                 $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                
+                if ($assessments) {
+                  foreach ($assessments as $index => $assessment):
 
-                foreach ($assessments as $index => $assessment):
 
-                  
-                  // Only display the first 3 assessments
-                  if ($index < 3):
-                    ?>
-                    <div class="schedules grid-margin stretch-card average-price-card">
-                      <div class="card text-white">
-                        <div class="card-body">
-                          <div class="d-flex justify-content-between pb-2 align-items-center">
-                            <h2 class="font-weight-semibold mb-0">
-                              <?= $assessment['subject']; ?>
-                            </h2>
-                            <div class="icon-holder">
-                              <i class="mdi mdi-pen"></i>
+                    // Only display the first 3 assessments
+                    if ($index < 3):
+                      ?>
+                      <div class="schedules grid-margin stretch-card average-price-card">
+                        <div class="card text-white" style="background-color: lightseagreen;">
+                          <a href="virtual_class.php?id=<?= $Subject['id']; ?>">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between pb-2 align-items-center">
+                                <h2 class="font-weight-semibold mb-0 text-white">
+                                  <?= $assessment['subject']; ?>
+                                </h2>
+
+                              </div>
+                              <div class="d-flex justify-content-between">
+                                <p style="font-weight: bold; color: white" class="font-weight-semibold mb-0">
+                                  <?= $assessment['date']; ?>
+                                </p>
+                                <p class="text-white mb-0">
+                                  <?php
+                                  $time = date("H:i", strtotime($assessment['time']));
+                                  echo $time;
+                                  ?>
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                          <div class="d-flex justify-content-between">
-                            <p style="font-weight: bold; color: white" class="font-weight-semibold mb-0">
-                              <?= $assessment['date']; ?>
-                            </p>
-                            <p class="text-white mb-0">
-                              <?php
-                              $time = date("H:i", strtotime($assessment['time']));
-                              echo $time;
-                              ?>
-                            </p>
-                          </div>
+                          </a>
                         </div>
                       </div>
-                    </div>
-                    <?php
-                  endif;
-                endforeach;
-                ?>
+                      <?php
+                    endif;
+                  endforeach;
+                  ?>
 
                 <?php
                 if ($index > 3): ?>
@@ -496,7 +505,12 @@ $class = 'SSS 1';
                       </p>
                     </a>
                   </div>
-                <?php endif; ?>
+                <?php endif;
+                } else {
+                  echo '<p class="text-center" style="padding-top:20%">Great! You have 0 uncompleted assessments 🎉</p>';
+                }
+                ?>
+
 
               </div>
             </div>
@@ -553,8 +567,8 @@ $class = 'SSS 1';
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2024</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Rinda LMS <a
-                href="#" target="_blank">Powered By Rinda AI</a></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Rinda LMS <a href="#"
+                target="_blank">Powered By Rinda AI</a></span>
           </div>
         </footer>
         <!-- partial -->
