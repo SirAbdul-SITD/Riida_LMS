@@ -23,7 +23,7 @@ $class = 'Grade 3';
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=0.1, shrink-to-fit=no">
 
 
   <title>My Subjects | Rinda LMS
