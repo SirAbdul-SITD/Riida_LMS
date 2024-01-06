@@ -16,16 +16,16 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-// $servername = "localhost";
-// $username = "Rindalms_rindalms";
-// $password = "OYAtshA03O,M5cvJrs";
-// $database = "Rindalms_rindalms";
-
-
 $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edurida";
+$username = "Rindalms_rindalms";
+$password = "OYAtshA03O,M5cvJrs";
+$database = "Rindalms_rindalms";
+
+
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "edurida";
 $teacher_id = '1';
 $api_key = "";
 
