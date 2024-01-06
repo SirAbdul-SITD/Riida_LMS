@@ -23,7 +23,9 @@ $class = 'Grade 3';
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
+
+
   <title>My Subjects | Rinda LMS
   </title>
   <!-- plugins:css -->
@@ -213,8 +215,8 @@ $class = 'Grade 3';
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Ahmad Isa</p>
-                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                <p class="mb-1 mt-3 font-weight-semibold">Student</p>
+                <p class="font-weight-light text-muted mb-0">student@rindalms.com.ng</p>
               </div>
               <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i
                   class="dropdown-item-icon ti-dashboard"></i></a>
@@ -243,133 +245,56 @@ $class = 'Grade 3';
                 <div class="dot-indicator bg-success"></div>
               </div>
               <div class="text-wrapper">
-                <p class="profile-name">Ahmad Isa</p>
-                <p class="designation">Premium user</p>
+                <p class="profile-name">Student</p>
+                
               </div>
             </a>
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <i class="menu-icon typcn typcn-bell"></i>
-              <span class="menu-title">Apps</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-1" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Students</span>
+              <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-1">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-2" aria-expanded="false" aria-controls="ui-2">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-2">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Lectures</span>
+              <span class="menu-title">Timetable</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-2">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All lectures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Process new lecture</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Edit lectures</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-3" aria-expanded="false" aria-controls="ui-3">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Exams</span>
+              <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-3">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/buttons.html">All Exams</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/dropdowns.html">Generate New</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/ui-features/typography.html">Mark Assessments</a>
-                </li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-shopping-bag"></i>
               <span class="menu-title">Calendar</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/charts/chartjs.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-th-large-outline"></i>
               <span class="menu-title">Events</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/tables/basic-table.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pages/icons/font-awesome.html">
-              <i class="menu-icon typcn typcn-user-outline"></i>
-              <span class="menu-title">Chats</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon typcn typcn-document-add"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/login.html"> Login </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/register.html"> Register </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-404.html"> 404 </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
-                </li>
-              </ul>
-            </div>
           </li>
         </ul>
       </nav>
@@ -467,7 +392,7 @@ $class = 'Grade 3';
                       ?>
                       <div class="schedules grid-margin stretch-card average-price-card">
                         <div class="card text-white" style="background-color: lightseagreen;">
-                          <a href="virtual_class.php?id=<?= $Subject['id']; ?>">
+                          <a href="assessment.php?id=<?= $Subject['id']; ?>">
                             <div class="card-body">
                               <div class="d-flex justify-content-between pb-2 align-items-center">
                                 <h2 class="font-weight-semibold mb-0 text-white">

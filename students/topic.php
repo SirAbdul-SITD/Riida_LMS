@@ -34,7 +34,9 @@ if (isset($_GET['id'])) {
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
+
+
   <title>Subject Settings | Rinda LMS
   </title>
   <!-- plugins:css -->
@@ -226,8 +228,8 @@ if (isset($_GET['id'])) {
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Ahmad Isa</p>
-                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                <p class="mb-1 mt-3 font-weight-semibold">Student</p>
+                <p class="font-weight-light text-muted mb-0">student@rindalms.com.ng</p>
               </div>
               <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i
                   class="dropdown-item-icon ti-dashboard"></i></a>
@@ -256,14 +258,14 @@ if (isset($_GET['id'])) {
                 <div class="dot-indicator bg-success"></div>
               </div>
               <div class="text-wrapper">
-                <p class="profile-name">Ahmad Isa</p>
+                <p class="profile-name">Student</p>
                 <p class="designation">Premium user</p>
               </div>
             </a>
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>

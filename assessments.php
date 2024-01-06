@@ -14,7 +14,9 @@ if (isset($_POST['class'])) {
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
+
+
   <title>Assessments | Rinda LMS
   </title>
   <!-- plugins:css -->
@@ -268,13 +270,13 @@ if (isset($_POST['class'])) {
               </div>
               <div class="text-wrapper">
                 <p class="profile-name">Ahmad Isa</p>
-                <p class="designation">Premium user</p>
+                
               </div>
             </a>
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -315,20 +317,20 @@ if (isset($_POST['class'])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="calendar.php">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-shopping-bag"></i>
               <span class="menu-title">Calendar</span>
             </a>
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="notifications.php">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="analytics.php">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-user-outline"></i>
               <span class="menu-title">Analytics</span>
             </a>
@@ -340,13 +342,13 @@ if (isset($_POST['class'])) {
 
 
       <?php
-      $query = "SELECT * FROM assessments WHERE create_by = :tutor";
+      $query = "SELECT * FROM assessments WHERE teacher_id = :tutor";
       $stmt = $pdo->prepare($query);
       $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
       $stmt->execute();
       $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-      $query = "SELECT * FROM subjects WHERE tutor = :tutor";
+      $query = "SELECT * FROM subjects WHERE teacher_id = :tutor";
       $stmt = $pdo->prepare($query);
       $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
       $stmt->execute();

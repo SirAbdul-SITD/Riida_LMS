@@ -33,7 +33,9 @@ $class = $_POST['class'];
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
+
+
   <title>Subjects | Rinda LMS
   </title>
   <!-- plugins:css -->
@@ -236,7 +238,7 @@ $class = $_POST['class'];
           </li>
           <li class="nav-item nav-category">Main Menu</li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-document-text"></i>
               <span class="menu-title">Dashboard</span>
             </a>

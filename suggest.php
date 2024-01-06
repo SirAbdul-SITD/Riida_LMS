@@ -17,7 +17,7 @@
     // $question = $ask;
 
     // Your OpenAI API key
-    $api_key = "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";
+    
 
 
     // Data to send in the POST request

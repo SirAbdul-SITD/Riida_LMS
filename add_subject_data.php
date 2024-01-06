@@ -76,7 +76,7 @@ try {
                 $userMessage = "Generate detailed content for this: " . $topic;
 
                 // Your OpenAI API key
-                $api_key = "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";
+                
 
                 // Data to send in the POST request
                 $data = json_encode([

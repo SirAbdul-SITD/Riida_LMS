@@ -1,11 +1,12 @@
 <?php
 require("../settings.php");
 
-if (isset($_GET['id'])) {
-  $id = $_GET['id'];
-} else {
-  $id = 8;
+
+if (isset($_POST['class'])) {
+  $class = $_POST['class'];
 }
+
+
 
 
 
@@ -18,11 +19,10 @@ if (isset($_GET['id'])) {
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
 
 
-  <title>Homework | Rinda LMS
+  <title>Subjects | Rinda LMS
   </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
@@ -48,57 +48,19 @@ if (isset($_GET['id'])) {
       border-radius: 10px;
     }
 
-    .popup {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 14px;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      background-color: rgba(0, 10, 5, 0.8);
-      /* Background color with opacity */
-      color: #fff;
+    .schedules :hover {
+      background-color: lightseagreen;
+      border-radius: 15px;
+      animation: 2s fade-in-out;
     }
 
-    .popup.success {
-      background-color: #4CAF50;
-      color: #fff;
-    }
-
-    .popup.error {
-      background-color: #F44336;
-      color: white;
-    }
-
-    .popup i {
-      margin-right: 5px;
-    }
-
-
-    #loading-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.9);
-      z-index: 1000;
-    }
-
-    #loading-screen img {
-      width: 200px;
-      border-radius: 70%;
-      height: 200px;
-      /* Adjust the height as needed */
+    .schedules {
+      background-color: black;
+      border-radius: 10px;
+      animation: 2s fade-in-out;
     }
   </style>
+
 </head>
 
 <body>
@@ -246,8 +208,8 @@ if (isset($_GET['id'])) {
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Student</p>
-                <p class="font-weight-light text-muted mb-0">student@rindalms.com.ng</p>
+                <p class="mb-1 mt-3 font-weight-semibold">Teacher</p>
+                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
               </div>
               <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i
                   class="dropdown-item-icon ti-dashboard"></i></a>
@@ -272,11 +234,11 @@ if (isset($_GET['id'])) {
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="profile-image">
-                <img class="img-xs rounded-circle" src="../assets/images/faces/face8.jpg" alt="profile image">
+                <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="profile image">
                 <div class="dot-indicator bg-success"></div>
               </div>
               <div class="text-wrapper">
-                <p class="profile-name">Student</p>
+                <p class="profile-name">Teacher</p>
                 
               </div>
             </a>
@@ -289,21 +251,15 @@ if (isset($_GET['id'])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-2">
-              <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Timetable</span>
-              <i class="menu-arrow"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-3">
+            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false"
+              aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
@@ -317,165 +273,294 @@ if (isset($_GET['id'])) {
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <i class="menu-icon typcn typcn-th-large-outline"></i>
-              <span class="menu-title">Events</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="menu-icon typcn typcn-user-outline"></i>
+              <span class="menu-title">Analytics</span>
+            </a>
+          </li>
         </ul>
       </nav>
+
       <!-- partial -->
       <div class="main-panel">
-        <div class="content-wrapper">
 
 
-          <div id="loading-screen">
-            <img src="processing.gif" alt="Loading">
-            <p style="font-size: 17px">Submitting Homework... Do Not Close Window!</p>
-          </div>
+        <?php
+        $query = "SELECT * FROM assessments WHERE teacher_id = :teacher_id ORDER BY `assessments`.`date` ASC";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
+        $stmt->execute();
+        $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($assessments) {
+           // Count the number of 'completed' and 'Queued' assessments
+        $completedCount = 0;
+        $queuedCount = 0;
 
 
-          <div class="row">
-            <div class="col-lg-8 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <strong>
-                    <h5>Questions</h5>
-                  </strong>
+          foreach ($assessments as $assessment) {
+            if ($assessment['status'] === 'Completed') {
+              $completedCount++;
+            } elseif ($assessment['status'] === 'Queued') {
+              $queuedCount++;
+            }
+          }
 
-                  <?php
+          // Calculate the percentage of completed assessments
+          $totalAssessments = count($assessments);
+          $completionPercentage = ($completedCount / $totalAssessments) * 100;
+        } else {
+          $completedCount = 0;
+          $totalAssessments = 0;
+          $completionPercentage = 0;
+        }
+       
 
-                  $query = "SELECT * FROM assessments WHERE `assessments`.`id` = :id";
-                  $stmt = $pdo->prepare($query);
-                  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                  $stmt->execute();
-                  $assessments = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                  // Decode JSON data
-                  $questionsData = json_decode($assessments['questions'], true);
-                  ?>
+          $suggestionMessage = '';
+          if ($completionPercentage < 40) {
+            $dotColor = 'bg-danger';
+            $suggestionMessage = "I suggest you conduct more assessments to assess individual performance.";
+          } elseif ($completionPercentage >= 41 && $completionPercentage <= 80) {
+            $dotColor = 'bg-warning';
+            $suggestionMessage = "Students are doing great! Consider providing real-time lesson feedback to help improve analysis.";
+          } elseif ($completionPercentage > 80) {
+            $dotColor = 'bg-success';
+            $suggestionMessage = "Students are doing excellent! Encourage them to maintain their performance.";
+          }
 
-                  <div class="questions_display">
-                    <form id="homework_form" action="mark.php" method="get">
-                      <input type="hidden" name="id" value="<?= $id ?>">
-                      <?php foreach ($questionsData['ObjectiveQuestions'] as $index => $question): ?>
-                        <b>
-                          <?= $index + 1; ?>.
-                          <?= $question['Question']; ?>
-                        </b>
-                        <ol type="a">
-                          <?php foreach ($question['Options'] as $optionIndex => $option): ?>
-                            <input type="hidden" name="objectives">
-                            <li>
-                              <input type="radio" id="essayQuestion" name="objectiveQuestion<?= $index + 1; ?>"
-                                value="<?= $optionIndex + 1; ?>">
-                              <?= $option; ?>
-                            </li>
-                          <?php endforeach; ?>
-                        </ol>
-                      <?php endforeach; ?>
+          ?>
 
-                      <?php foreach ($questionsData['EssayQuestions'] as $index => $question): ?>
-                        <input type="hidden" name="essay<?= $index + 1; ?>" value="<?= $question['Question']; ?>">
-                        <p>
-                          <?= $index + 1; ?>.
-                          <?= $question['Question']; ?>
-                          <textarea class="form-control" id="essayQuestion" name="essayQuestion<?= $index + 1; ?>"
-                            rows="2" style="border-radius: 8px"></textarea>
-                        </p>
-                      <?php endforeach; ?>
-                      <div class="row">
-                        <div style="width: 1%"></div>
-                        <button id="save_homework" type="submit" class="btn btn-inverse-primary btn-sm"
-                          style="width: 49%; height: 40px; border-radius: 10px;">Save Draft
-                        </button>
-                        <div style="width: 1%">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body" style="padding: 4%; margin: 0%;">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="d-flex align-items-center pb-2">
+                              <div class="dot-indicator <?= $dotColor ?> mr-2"></div>
+                              <p class="mb-0">Performance</p>
+                            </div>
+                            <?php
+
+                            echo '<p style="padding: 0px">' . $suggestionMessage . '</p>';
+                            ?>
+
+
+                          </div>
+
                         </div>
-                        <button id="submit_homework" type="submit" class="btn btn-inverse-success btn-sm"
-                          style="width: 49%; height: 40px; border-radius: 10px;">Submit Homework
-                        </button>
                       </div>
-                    </form>
+                    </div>
                   </div>
 
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4" style="position: fixed; right: 0; width: 27%;">
-              <div class="col-md-12 grid-margin">
-                <div class="grid-margin stretch-card">
-                  <div class="row">
-                    <div class="card" style="padding: 0px; margin: 0px;">
-                      <div class="card-body d-flex " style="padding: 0px; margin: 0px;">
-                        <div class="wrapper" style="padding: 9px; margin: 0px;">
-                          <!-- <div style="padding: 0px 18px 0px 18px" id="scores"  style="display: none">
-                            <strong>Scores:</strong> </br>
-                            <span style="padding: 0px 15px 0px 40px">
-                              Objectives Answers Scores: <span id="obj_scores">2</span>
-                            </span> </br> </br>
-                            <span style="padding: 0px 15px 0px 40px">
-                              Theory Answers Scores: <span id="essay_scores">3</span>
-                            </span>
-                          </div> -->
-                          <!-- <div id="time_lapse">
-                            <script src="https://cdn.logwork.com/widget/countdown.js"></script>
-                            <a href="https://logwork.com/countdown-8khp" class="countdown-timer"
-                              data-timezone="Africa/Lagos" data-date="<?= $assessments['date']; ?> <?php $time = date("H:i", strtotime($assessment['time']));
-                                 echo $time;
-                                 ?>" style="font-size: large">
-                              <h6>Submits</h6>
-                            </a>
-                          </div> -->
-                          <div id="time_lapse">
-                            <script src="https://cdn.logwork.com/widget/countdown.js"></script>
-                            <a href="https://logwork.com/countdown-8khp" class="countdown-timer"
-                              data-timezone="Africa/Lagos" data-date="<?= $assessments['date']; ?> <?php $time = date("H:i", strtotime($assessment['time']));
-                                 echo $time;
-                                 ?>" style="font-size: large">
-                              <h6>Submits</h6>
-                            </a>
+                  <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="d-flex align-items-center pb-2">
+                              <?php
+                              $backgroundColor = '';
+                              if ($completionPercentage < 40) {
+                                $backgroundColor = 'bg-danger';
+                              } elseif ($completionPercentage >= 41 && $completionPercentage <= 80) {
+                                $backgroundColor = 'bg-warning';
+                              } elseif ($completionPercentage > 80) {
+                                $backgroundColor = 'bg-success';
+                              }
+
+                              $indicatorHTML = '<div class="dot-indicator ' . $backgroundColor . ' mr-2"></div>';
+                              echo $indicatorHTML;
+                              ?>
+
+                              <p class="mb-0">Assessments</p>
+                            </div>
+                            <h5 class="font-weight-semibold">
+                              <?= $completedCount ?> /
+                              <?= $totalAssessments ?>
+                            </h5>
+                            <div class="progress progress-md">
+                              <div class="progress-bar <?= $backgroundColor ?>" role="progressbar"
+                                style="width: <?= $completionPercentage ?>%" aria-valuenow="<?= $completionPercentage ?>"
+                                aria-valuemin="0" aria-valuemax="30"></div>
+                            </div>
+                            <?php
+
+                            ?>
+                          </div>
+                          <div class="col-md-6 mt-4 mt-md-0">
+                            <div class="d-flex align-items-center pb-2">
+                              <div class="dot-indicator bg-primary mr-2"></div>
+                              <p class="mb-0">Current Week</p>
+                            </div>
+                            <h5 class="font-weight-semibold">Week 1</h5>
+                            <div class="progress progress-md">
+                              <div class="progress-bar bg-primary" role="progressbar" style="width: 10%"
+                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
 
+                  <div class="col-md-12 grid-margin">
                     <div class="card">
-                      <div class="card-body d-flex">
-                        <div class="wrapper">
-                          <h5>Homework Details</h5>
-                          <p><strong>Type:</strong>
-                            <?= $assessments['type']; ?>
-                          </p>
-                          <p><strong>Due Date:</strong>
-                            <?php $dt = date("j F, Y", strtotime($assessments['date']));
-                            echo $dt; ?>
-                          </p>
-                          <p><strong>Subject:</strong>
-                            <?= $assessments['subject']; ?>
-                          </p>
-                          <p><strong>Class:</strong>
-                            <?= $assessments['class']; ?>
-                          </p>
-                          <p><strong>Instructions:</strong> Solve the problems on pages 50-60 in your textbook and
-                            submit your solutions by the due date.</p>
-                        </div>
+                      <div class="card-body"> <strong>
+                          <h5>Assigned Subjects</h5>
+                        </strong>
+
+
+                        <?php
+
+                        $query = "SELECT * FROM Subjects WHERE teacher_id = :teacher_id ORDER BY `Subjects`.`Subject` ASC";
+                        $stmt = $pdo->prepare($query);
+                        $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
+                        $stmt->execute();
+                        $Subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+                        if (count($Subjects) === 0) {
+                          echo '<p class="text-center">No subject assigned to you yet!</p>';
+
+                        } else {
+                          ?>
+
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th> Name </th>
+                                <th>Class</th>
+                                <th> No. of topics </th>
+                                <th> Progress </th>
+                                <th> Action </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              foreach ($Subjects as $index => $Subject): ?>
+                                <tr>
+                                  <td>
+                                    <?= $Subject['subject']; ?>
+                                  </td>
+                                  <td class="py-1">
+                                    <?= $Subject['class']; ?>
+                                  </td>
+
+                                  <td>
+                                    <?= $Subject['topics_no']; ?> Topics
+                                  </td>
+                                  <td>
+                                    <div class="progress">
+                                      <div class="progress-bar bg-danger" role="progressbar"
+                                        style="width: <?= $Subject['progress']; ?>%"
+                                        aria-valuenow="<?= $Subject['progress']; ?>" aria-valuemin="0" aria-valuemax="100">
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td>
+<!-- 
+                                    <button style="padding:7px 5px" type="button" id="form_button"
+                                      class="btn social-btn btn-rounded btn-social-outline-twitter">
+                                      <a href="topic.php">
+                                        <i class="fa fa-graduation-cap "></i>
+                                      </a>
+                                    </button> -->
+                                    <a href="topic.php?subject=<?= $Subject['subject']; ?> & id=<?= $Subject['id']; ?> ">
+                                      <button style="padding:7px" type="button" id="form_button"
+                                        class="btn social-btn btn-rounded btn-social-outline-twitter">
+                                        <i class="mdi mdi-settings"></i>
+                                      </button></a>
+                                  </td>
+                                </tr>
+                              <?php endforeach; ?>
+                            </tbody>
+                          </table>
+                        <?php } ?>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="col-md-12 grid-margin">
+                  <h5>Upcoming Classes</h5>
+                  <?php
+                  $query = "SELECT * FROM class_schedule WHERE tutor = :tutor ORDER BY `class_schedule`.`schedule_day` ASC";
+                  $stmt = $pdo->prepare($query);
+                  $stmt->bindParam(':tutor', $teacher_id, PDO::PARAM_STR);
+                  $stmt->execute();
+                  $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                  if (count($schedules) === 0) {
+                    echo '<p class="text-center" style="padding-top: 15%;">You have no upcoming classes</p>';
+
+                  } else {
+
+                  foreach ($schedules as $index => $schedule):
+                    // Only display the first 3 assessments
+                    if ($index < 3):
+                      ?>
+                      <div class="schedules grid-margin stretch-card average-price-card">
+                        <div class="card schedule text-white" style="background-color: lightseagreen;">
+                          <div class="card-body">
+                            <div class="d-flex justify-content-between pb-2 align-items-center">
+                              <h2 class="font-weight-semibold mb-0">
+                                <?= $schedule['subject']; ?>
+                              </h2>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <p style="font-weight: bold; color: white" class="font-weight-semibold mb-0">
+                                <?= $schedule['type']; ?>
+                              </p>
+                              <p class="text-white mb-0">
+                                <?= $schedule['schedule_day']; ?> -
+                                <?php
+                                $time = date("H:i", strtotime($schedule['schedule_time']));
+                                echo $time;
+                                ?>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <?php
+                    endif;
+                  endforeach;
+                  ?>
+
+                  <?php
+                  if ($index > 3): ?>
+                    <div class="row">
+                      <div style="width: 195px;"></div>
+                      <a href="schedules">
+                        <p style="color: lightseagreen">View
+                          <?= $index - 2 ?> more
+                        </p>
+                      </a>
+                    </div>
+                  <?php endif; } ?>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
+        
+        <script src="jquery-3.6.4.min.js"></script>
         <script>
-
-          // Function to display a popup message
+          //Function to display a popup message
           function displayPopup(message, success) {
             var popup = document.createElement('div');
             popup.className = 'popup ' + (success ? 'success' : 'error');
@@ -489,46 +574,22 @@ if (isset($_GET['id'])) {
             text.textContent = message;
             popup.appendChild(text);
 
-            // Add styles to change cursor to hand on hover
-            popup.style.cursor = 'pointer';
-
-            // Add click event to navigate to the target page
-            popup.addEventListener('click', function () {
-              window.location.href = 'subjects.php'; // Replace 'your_target_page.html' with the actual page URL
-            });
-
             document.body.appendChild(popup);
+
+            setTimeout(function () {
+              popup.remove();
+            }, 5000);
           }
 
 
-
-
-
-          document.getElementById("submit_homework").addEventListener("click", function (event) {
-            event.preventDefault();
+          document.getElementById("form_button").addEventListener("click", function () {
             $.ajax({
               type: 'POST',
-              url: 'mark.php',
-              data: $('#homework_form').serialize(),
+              url: 'suggest.php',
+              data: $('#subject_form').serialize(),
               dataType: 'json',
-              beforeSend() {
-                document.getElementById("loading-screen").style.display = "flex";
-              },
-              success: function (response) {
-                // Assuming the response contains a "message" field
-                document.getElementById("save_homework").style.display = "none";
-                document.getElementById("submit_homework").style.display = "none";
-                document.getElementById("loading-screen").style.display = "none";
-                displayPopup(response.message, response.success);
-                console.log(response.message);
-              },
-              error: function (xhr) {
-                displayPopup('An error occurred.', false);
-                console.log(xhr.responseJSON.message); // Corrected to use xhr instead of response
-              }
             });
           });
-
         </script>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
@@ -537,9 +598,7 @@ if (isset($_GET['id'])) {
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2024</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Rinda LMS <a
-                href="#" target="_blank">Rinda School
-                Management
-                Software</a></span>
+                href="#" target="_blank">Powered By Rinda AI</a></span>
           </div>
         </footer>
         <!-- partial -->

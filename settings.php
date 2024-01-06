@@ -27,6 +27,7 @@ $username = "root";
 $password = "";
 $database = "edurida";
 $teacher_id = '1';
+$api_key = "";
 
 try {
   $pdo = new PDO("mysql:host=$servername;dbname=$database;charset=utf8", $username, $password);

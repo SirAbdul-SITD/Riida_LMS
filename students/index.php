@@ -1,7 +1,22 @@
 <?php
-require("settings.php");
+require("../settings.php");
+
+// if (isset($_POST['new_subject'])) { 
+//   $class = $_POST['new_class'];
+//   $new_subject = $_POST['new_subject'];
+//   $updateQuery = "INSERT INTO `subjects` (`subject`, `class`) VALUES (:subject, :class)";
+//     $updateStmt = $pdo->prepare($updateQuery);
+//     $updateStmt->bindParam(':subject', $new_subject, PDO::PARAM_STR);
+//     $updateStmt->bindParam(':class', $class, PDO::PARAM_STR);
+//     $updateStmt->execute();
+//   }
+
+$class = 'Grade 3';
+
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,79 +26,46 @@ require("settings.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
 
 
-  <title>Rinda LMS</title>
+  <title>My Subjects | Rinda LMS
+  </title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
-  <link rel="stylesheet" href="assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
-  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.addons.css">
+  <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
+  <link rel="stylesheet" href="../assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.addons.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="assets/css/shared/style.css">
+  <link rel="stylesheet" href="../assets/css/shared/style.css">
+  <link rel="stylesheet" href="../assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
   <!-- endinject -->
   <!-- Layout styles -->
-  <link rel="stylesheet" href="assets/css/demo_1/style.css">
+  <link rel="stylesheet" href="../assets/css/demo_1/style.css">
   <!-- End Layout styles -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico" />
-  <script src="jquery-3.6.4.min.js"></script>
-  <script src="bootstrap.min.js"></script>
+  <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+  <script src="../jquery-3.6.4.min.js"></script>
 
   <style>
     .card {
       border-radius: 10px;
     }
 
-    .popup {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 14px;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      background-color: rgba(0, 10, 5, 0.8);
-      /* Background color with opacity */
-      color: #fff;
+    .schedules :hover {
+      background-color: lightseagreen;
+      border-radius: 15px;
+      animation: 2s fade-in-out;
     }
 
-    .popup.success {
-      background-color: #4CAF50;
-      color: #fff;
+    .schedules {
+      background-color: black;
+      border-radius: 10px;
+      animation: 2s fade-in-out;
     }
 
-    .popup.error {
-      background-color: #F44336;
-      color: white;
-    }
-
-    .popup i {
-      margin-right: 5px;
-    }
-
-    #loading-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.9);
-      z-index: 1000;
-    }
-
-    #loading-screen img {
-      width: 200px;
-      border-radius: 70%;
-      height: 200px;
-      /* Adjust the height as needed */
+    .schedules a {
+      text-decoration: none;
     }
   </style>
 </head>
@@ -160,7 +142,7 @@ require("settings.php");
               <div class="dropdown-divider"></div>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                  <img src="assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                  <img src="../assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow py-2">
                   <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
@@ -169,7 +151,7 @@ require("settings.php");
               </a>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                  <img src="assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                  <img src="../assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow py-2">
                   <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
@@ -178,7 +160,7 @@ require("settings.php");
               </a>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                  <img src="assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                  <img src="../assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow py-2">
                   <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
@@ -229,12 +211,12 @@ require("settings.php");
           </li>
           <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image"> </a>
+              <img class="img-xs rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image"> </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
-                <img class="img-md rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold">Ahmad Isa</p>
-                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
+                <p class="mb-1 mt-3 font-weight-semibold">Student</p>
+                <p class="font-weight-light text-muted mb-0">student@rindalms.com.ng</p>
               </div>
               <a class="dropdown-item">My Profile <span class="badge badge-pill badge-danger">1</span><i
                   class="dropdown-item-icon ti-dashboard"></i></a>
@@ -259,11 +241,11 @@ require("settings.php");
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="profile-image">
-                <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="profile image">
+                <img class="img-xs rounded-circle" src="../assets/images/faces/face8.jpg" alt="profile image">
                 <div class="dot-indicator bg-success"></div>
               </div>
               <div class="text-wrapper">
-                <p class="profile-name">Ahmad Isa</p>
+                <p class="profile-name">Student</p>
                 
               </div>
             </a>
@@ -276,36 +258,21 @@ require("settings.php");
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="teachers.php" aria-expanded="false" aria-controls="ui-2">
-              <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Teachers</span>
-              <i class="menu-arrow"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="classes.php" aria-expanded="false" aria-controls="ui-1">
-              <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Classes</span>
-              <i class="menu-arrow"></i>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
-              <i class="menu-icon typcn typcn-coffee"></i>
-              <span class="menu-title">Students</span>
-              <i class="menu-arrow"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false"
-              aria-controls="ui-3">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-2">
+              <i class="menu-icon typcn typcn-coffee"></i>
+              <span class="menu-title">Timetable</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
@@ -317,165 +284,86 @@ require("settings.php");
               <span class="menu-title">Calendar</span>
             </a>
           </li>
-
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="menu-icon typcn typcn-th-large-outline"></i>
+              <span class="menu-title">Events</span>
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-bell"></i>
               <span class="menu-title">Notifications Center</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="menu-icon typcn typcn-user-outline"></i>
-              <span class="menu-title">Analytics</span>
-            </a>
-          </li>
         </ul>
       </nav>
-
-
-      <?php
-      $query = "SELECT * FROM classes";
-      $stmt = $pdo->prepare($query);
-      $stmt->execute();
-      $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-      ?>
-
-      <!-- todo display modal -->
-      <div class="modal fade" id="add_new" tabindex="-1" aria-hidden="true" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <div class="">
-                <div class="">
-                  <div class="card-body d-flex flex-column">
-                    <form action="" id="add_student_form" method="post">
-                      <div class="add_new_student">
-                        <p>Add New Student</p>
-                        <div>
-                          <div class="row  schedule_tab" id="schedule_tab">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label for="first_name">First Name</label>
-                                <input required style="border-radius: 10px; height: 40px" name="first_name"
-                                  class="form-control" type="text" placeholder="Enter First Name">
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label for="last_name">Last Name</label>
-                                <input required style="border-radius: 10px; height: 40px" name="last_name"
-                                  class="form-control" type="text" placeholder="Enter Last Name">
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label for="adm_no">Admission No.</label>
-                            <input required style="border-radius: 10px; height: 40px" name="adm_no" class="form-control"
-                              type="text" placeholder="Enter Student's Admission No.">
-                          </div>
-
-                          <div class="form-group">
-                            <label for="class_id">Assign Class</label>
-                            <select required style="border-radius: 10px; height: 40px" class="form-control"
-                              name="class_id">
-                              <option selected disabled>None</option>
-                              <?php
-                              foreach ($classes as $class): ?>
-                                <option value="<?= $class['id']; ?>"> <?= $class['class']; ?></option>
-                              <?php endforeach; ?>
-                            </select>
-
-                            <input type="hidden" name="class_name" value=" <?= $class['class']; ?>">
-                          </div>
-                        </div>
-                        <button id="add_student_form_button" type="submit" class="btn btn-inverse-success btn-sm"
-                          style="width: 100%; height: 40px; border-radius: 10px;">Add Student</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <div id="loading-screen">
-            <img src="processing.gif" alt="Loading">
-            <p style="font-size: 17px">Adding New Teacher...</p>
-          </div>
           <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-lg-8 grid-margin stretch-card">
               <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-11">
-                      <h4 class="card-title">Students</h4>
-                    </div>
-                    <div>
-                      <div class="form-group">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#add_new"
-                          style=" width: 40px; border-radius: 10px; height: 40px;"
-                          class=" align-items-center btn btn-icons btn-inverse-success">
-                          <i class="mdi mdi-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <?php
-                  $query = "SELECT * FROM students ORDER BY `students`.`first_name` ASC";
-                  $stmt = $pdo->prepare($query);
-                  $stmt->execute();
-                  $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                <div class="card-body"> <strong>
+                    <h5>My Subjects</h5>
+                  </strong>
 
-                  if (count($students) === 0) {
-                    echo '<p class="text-center">None added Yet!</p>';
+
+                  <?php
+
+                  $query = "SELECT * FROM Subjects WHERE class = :class ORDER BY `Subjects`.`Subject` ASC";
+                  $stmt = $pdo->prepare($query);
+                  $stmt->bindParam(':class', $class, PDO::PARAM_STR);
+                  $stmt->execute();
+                  $Subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+                  if (count($Subjects) === 0) {
+                    echo '<p class="text-center">No subject offered in your class yet!</p>';
+
                   } else {
                     ?>
 
                     <table class="table table-striped">
                       <thead>
                         <tr>
-                          <th> Reg No. </th>
                           <th> Name </th>
-                          <th> Class </th>
+                          <th>Class</th>
+                          <th> No. of topics </th>
                           <th> Progress </th>
-                          <th> Explore </th>
+                          <th> Learn </th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        foreach ($students as $index => $student): ?>
+                        foreach ($Subjects as $index => $Subject): ?>
                           <tr>
+                            <td>
+                              <?= $Subject['subject']; ?>
+                            </td>
                             <td class="py-1">
-                              <?= $student['adm_no']; ?>
+                              <?= $Subject['class']; ?>
                             </td>
+
                             <td>
-                              <?= $student['first_name'] . ' ' . $student['last_name']; ?>
-                            </td>
-                            <td>
-                              <?= $student['class'] ?>
+                              <?= $Subject['topics_no']; ?> Topics
                             </td>
                             <td>
                               <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar"
-                                  style="width: <?= $student['performance'] ?>%"
-                                  aria-valuenow="<?= $student['performance'] ?>" aria-valuemin="0" aria-valuemax="100">
-                                </div>
+                                <div class="progress-bar bg-danger" role="progressbar"
+                                  style="width: <?= $Subject['progress']; ?>%" aria-valuenow="<?= $Subject['progress']; ?>"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                             </td>
                             <td>
-                              <button type="button" class="btn social-btn btn-rounded btn-social-outline-twitter">
-                                <i class="mdi mdi-settings"></i>
+                              <button style="padding:7px 5px" type="button" id="form_button"
+                                class="btn social-btn btn-rounded btn-social-outline-twitter">
+                                <a href="virtual_class.php?id=<?= $Subject['id']; ?>">
+                                  <i class="fa fa-graduation-cap"></i>
+                                </a>
                               </button>
+
                             </td>
                           </tr>
                         <?php endforeach; ?>
@@ -485,85 +373,127 @@ require("settings.php");
                 </div>
               </div>
             </div>
+            <div class="col-md-4">
+              <div class="col-md-12 grid-margin">
+                <h5>Assessments</h5>
+                <?php
+                $query = "SELECT * FROM assessments WHERE class = :class ORDER BY `assessments`.`date` ASC";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(':class', $class, PDO::PARAM_STR);
+                $stmt->execute();
+                $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if ($assessments) {
+                  foreach ($assessments as $index => $assessment):
+
+
+                    // Only display the first 3 assessments
+                    if ($index < 3):
+                      ?>
+                      <div class="schedules grid-margin stretch-card average-price-card">
+                        <div class="card text-white" style="background-color: lightseagreen;">
+                          <a href="virtual_class.php?id=<?= $Subject['id']; ?>">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between pb-2 align-items-center">
+                                <h2 class="font-weight-semibold mb-0 text-white">
+                                  <?= $assessment['subject']; ?>
+                                </h2>
+
+                              </div>
+                              <div class="d-flex justify-content-between">
+                                <p style="font-weight: bold; color: white" class="font-weight-semibold mb-0">
+                                  <?= $assessment['date']; ?>
+                                </p>
+                                <p class="text-white mb-0">
+                                  <?php
+                                  $time = date("H:i", strtotime($assessment['time']));
+                                  echo $time;
+                                  ?>
+                                </p>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <?php
+                    endif;
+                  endforeach;
+                  ?>
+
+                <?php
+                if ($index > 3): ?>
+                  <div class="row">
+                    <div style="width: 195px;"></div>
+                    <a href="schedules">
+                      <p style="color: lightseagreen">View
+                        <?= $index - 2 ?> more
+                      </p>
+                    </a>
+                  </div>
+                <?php endif;
+                } else {
+                  echo '<p class="text-center" style="padding-top:20%">Great! You have 0 uncompleted assessments 🎉</p>';
+                }
+                ?>
+
+
+              </div>
+            </div>
           </div>
         </div>
 
 
+        <script src="jquery-3.6.4.min.js"></script>
         <script>
-          //Function to display a popup message
-          function displayPopup(message, success) {
-            var popup = document.createElement('div');
-            popup.className = 'popup ' + (success ? 'success' : 'error');
+    // Function to display a popup message
+    // function displayPopup(message, success) {
+    //   var popup = document.createElement('div');
+    //   popup.className = 'popup ' + (success ? 'success' : 'error');
 
-            var iconClass = success ? 'fa fa-check-circle' : 'fa fa-times-circle';
-            var icon = document.createElement('i');
-            icon.className = iconClass;
-            popup.appendChild(icon);
+    //   var iconClass = success ? 'fa fa-check-circle' : 'fa fa-times-circle';
+    //   var icon = document.createElement('i');
+    //   icon.className = iconClass;
+    //   popup.appendChild(icon);
 
-            var text = document.createElement('span');
-            text.textContent = message;
-            popup.appendChild(text);
+    //   var text = document.createElement('span');
+    //   text.textContent = message;
+    //   popup.appendChild(text);
 
-            document.body.appendChild(popup);
+    //   document.body.appendChild(popup);
 
-            setTimeout(function () {
-              popup.remove();
-            }, 5000);
-          }
-
-
+    //   setTimeout(function () {
+    //     popup.remove();
+    //   }, 5000);
+    // }
 
 
-          document.getElementById("add_student_form_button").addEventListener("click", function (event) {
-            console.log('form submitted');
-            event.preventDefault();
-
-            $.ajax({
-              type: 'POST',
-              url: 'add_student.php',
-              data: $('#add_student_form').serialize(),
-              dataType: 'json',
-              beforeSend: function () {
-                document.getElementById("loading-screen").style.display = "flex";
-                // Disable submit button and input fields
-                $('#add_new').modal('hide');
-              },
-              success: function (response) {
-                // Check the 'success' property in the response
-                if (response.success) {
-                  // Display success popup
-                  displayPopup(response.message, true);
-                  // Close the modal (adjust this based on your modal implementation)
-                  document.getElementById("loading-screen").style.display = "none";
-                } else {
-                  // Display error popup
-                  displayPopup(response.message, false);
-                }
-              },
-              error: function (error, xhr) {
-                // Display error popup for AJAX error
-                displayPopup('Error occurred during AJAX request', false);
-                console.error('Error:', error, xhr);
-                $('#add_new').modal('show');
-              },
-              complete: function () {
-                document.getElementById("loading-screen").style.display = "none";
-              },
-            });
-          });
-
-
+    // document.getElementById("form_buttonsss").addEventListener("click", function () {
+    //   $.ajax({
+    //     type: 'POST',
+    //     url: '',
+    //     data: $('#subject_formsss').serialize(),
+    //     dataType: 'json',
+    //     // beforeSend: function () {
+    //     //   $("#loadingScreen").show();
+    //     // },
+    //     success: function (response) {
+    //       // Assuming the response contains a "message" field
+    //       displayPopup(response.message, response.success);
+    //     },
+    //     error: function (xhr) {
+    //       displayPopup('An error occurred.', false);
+    //     }
+    //   });
+    // });
         </script>
-
-
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
               2024</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Rinda LMS <a
-                href="#" target="_blank">Powered By Rinda AI</a></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Rinda LMS <a href="#"
+                target="_blank">Powered By Rinda AI</a></span>
           </div>
         </footer>
         <!-- partial -->
@@ -574,20 +504,18 @@ require("settings.php");
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <script src="../../assets/vendors/js/vendor.bundle.addons.js"></script>
+  <script src="../../../assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../../assets/vendors/js/vendor.bundle.addons.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="../../assets/js/shared/off-canvas.js"></script>
-  <script src="../../assets/js/shared/misc.js"></script>
+  <script src="../../../assets/js/shared/off-canvas.js"></script>
+  <script src="../../../assets/js/shared/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="../../assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
+  <script src="../../../assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
   <!-- End custom js for this page-->
 </body>
 
 </html>
-
-
