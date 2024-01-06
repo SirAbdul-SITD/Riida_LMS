@@ -311,7 +311,7 @@ $class = 'Grade 3';
 
                   <?php
 
-                  $query = "SELECT * FROM Subjects WHERE class = :class ORDER BY `Subjects`.`Subject` ASC";
+                  $query = "SELECT * FROM subjects WHERE class = :class ORDER BY `subjects`.`subject` ASC";
                   $stmt = $pdo->prepare($query);
                   $stmt->bindParam(':class', $class, PDO::PARAM_STR);
                   $stmt->execute();

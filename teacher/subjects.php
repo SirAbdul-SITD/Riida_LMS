@@ -422,7 +422,7 @@ if (isset($_POST['class'])) {
 
                         <?php
 
-                        $query = "SELECT * FROM Subjects WHERE teacher_id = :teacher_id ORDER BY `Subjects`.`Subject` ASC";
+                        $query = "SELECT * FROM subjects WHERE teacher_id = :teacher_id ORDER BY `subjects`.`subject` ASC";
                         $stmt = $pdo->prepare($query);
                         $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
                         $stmt->execute();
