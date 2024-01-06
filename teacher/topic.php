@@ -57,9 +57,40 @@ if (isset($_GET['id'])) {
   <script src="../jquery-3.6.4.min.js"></script>
 
   <style>
-    .card {
+     .card {
       border-radius: 10px;
     }
+
+
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      background-color: rgba(0, 10, 5, 0.8);
+      /* Background color with opacity */
+      color: #fff;
+    }
+
+    .popup.success {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+
+    .popup.error {
+      background-color: #F44336;
+      color: white;
+    }
+
+    .popup i {
+      margin-right: 5px;
+    }
+
 
     .schedules :hover {
       background-color: blue;
@@ -356,7 +387,7 @@ if (isset($_GET['id'])) {
                         </form>
                       </div>
 
-                      <button id="compile" type="submit" class="btn btn-inverse-success btn-sm" style="width: 100%">Save
+                      <button id="compile" disabled type="submit" class="btn btn-inverse-success btn-sm" style="width: 100%">Save
                         Changes</button>
 
                     </form>
@@ -443,7 +474,7 @@ if (isset($_GET['id'])) {
                           <label for="focus">What do you want to modify?</label>
                           <textarea style="border-radius: 10px;" class="form-control" id="message" name="message"
                             rows="9"
-                            placeholder="E.g. Spread the number of examples across the sub-topics evenly..."></textarea>
+                            placeholder="E.g. Spread the lessons across 4 sitting a week for 3 weeks..."></textarea>
                         </div>
                         <button type="submit" id="regenerate" class="btn btn-inverse-success btn-sm"
                           style="width: 100%">Re-Generate
@@ -470,7 +501,7 @@ if (isset($_GET['id'])) {
 
 
         <script>
-            Function to display a popup message
+           // Function to display a popup message
           function displayPopup(message, success) {
             var popup = document.createElement('div');
             popup.className = 'popup ' + (success ? 'success' : 'error');
@@ -530,7 +561,7 @@ if (isset($_GET['id'])) {
                     original.value = response.content;
                     var lesson_id = document.getElementById("lesson_id");
                     lesson_id.value = response.id;
-                    // Process the response here, e.g., update the DOM with the content
+                   
                   } else {
                     console.log('Error: ' + response.message);
                   }
@@ -572,6 +603,7 @@ if (isset($_GET['id'])) {
 
                     var compile_button = document.getElementById("compile");
                     compile_button.innerText = "save";
+                    $('#compile').prop('disabled', false);
                     // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);

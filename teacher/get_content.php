@@ -19,7 +19,7 @@ try {
       $content = $topic_content['content'];
 
       // Echo the success response outside the foreach loop
-      $response = ['success' => true, 'response' => 'success', 'content' => $content, 'id' => $topic_id];
+      $response = ['success' => true, 'response' => 'success', 'content' => $content, 'id' => $topic_id, 'message' => 'Content Retrieved',];
       echo json_encode($response);
 
 
