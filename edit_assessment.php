@@ -1,25 +1,6 @@
 <?php
 require("../settings.php");
 
-if (isset($_POST['new_subject'])) {
-  $class = $_POST['new_class'];
-  $new_subject = $_POST['new_subject'];
-
-  $updateQuery = "INSERT INTO `subjects` (`subject`, `class`, `assigned`) VALUES (:subject, :class, :assigned)";
-  $updateStmt = $pdo->prepare($updateQuery);
-  $updateStmt->bindParam(':subject', $new_subject, PDO::PARAM_STR);
-  $updateStmt->bindParam(':class', $class, PDO::PARAM_STR);
-  $updateStmt->bindParam(':assigned', $teacher_id, PDO::PARAM_STR);
-  $updateStmt->execute();
-
-  $amount = 1;
-  $updateBalanceQuery = "UPDATE classes SET subject_no = subject_no + :amount WHERE class = :class";
-  $updateBalanceStmt = $pdo->prepare($updateBalanceQuery);
-  $updateBalanceStmt->bindParam(':amount', $amount, PDO::PARAM_INT);
-  $updateBalanceStmt->bindParam(':class', $class, PDO::PARAM_STR);
-  $updateBalanceStmt->execute();
-}
-
 if (isset($_GET['id'])) {
   $subject_id = $_GET['id'];
   $subject = $_GET['subject'];
@@ -37,7 +18,7 @@ if (isset($_GET['id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no">
 
 
-  <title>Subject Settings | Rinda LMS
+  <title>Edit Assessments | Rinda LMS
   </title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
@@ -59,10 +40,15 @@ if (isset($_GET['id'])) {
   <script src="../jquery-3.6.4.min.js"></script>
 
   <style>
-     .card {
+    .card {
       border-radius: 10px;
     }
 
+    .schedules :hover {
+      background-color: blue;
+      border-radius: 15px;
+      animation: 2s fade-in-out;
+    }
 
     .popup {
       position: fixed;
@@ -91,13 +77,6 @@ if (isset($_GET['id'])) {
 
     .popup i {
       margin-right: 5px;
-    }
-
-
-    .schedules :hover {
-      background-color: blue;
-      border-radius: 15px;
-      animation: 2s fade-in-out;
     }
 
     #loading-screen {
@@ -312,14 +291,14 @@ if (isset($_GET['id'])) {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="subjects.php" aria-expanded="false">
+            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="assessments.php" aria-expanded="false"
+            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false"
               aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>
@@ -352,22 +331,18 @@ if (isset($_GET['id'])) {
 
           <div id="loading-screen">
             <img src="processing.gif" alt="Loading">
-            <p style="font-size: 17px">Generating Lesson Plan... May take upto a minute</p>
+            <p style="font-size: 17px" id="loadingText"></p>
           </div>
 
 
-
           <?php
-          $query = "SELECT * FROM classes";
-          $stmt = $pdo->prepare($query);
-          $stmt->execute();
-          $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-          $query = "SELECT * FROM topics WHERE subject_id = :subject_id";
+          $query = "SELECT * FROM assessments";
           $stmt = $pdo->prepare($query);
-          $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_STR);
           $stmt->execute();
-          $topics = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          $assessments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
           ?>
 
 
@@ -377,19 +352,17 @@ if (isset($_GET['id'])) {
                 <div class="card-body col-md-12 align-self-center">
                   <div class=" align-content-start">
                     <!-- Align content to left -->
-                    <form>
+                    <form method="GET" id="compileform">
                       <div class="form-group">
-                        <label for="exampleTextarea1">Edit topic contents</label>
+                        <label for="exampleTextarea1">Edit assessment questions</label>
                         <textarea style="border-radius: 10px;" class="form-control" id="content" name="content"
-                          rows="32"></textarea>
-                        <form id="compileform">
-                          <input type="hidden" name="original" id="original">
-                          <input type="hidden" name="generated_content" id="generated_content">
-                          <input type="hidden" name="lesson_id" id="lesson_id">
-                        </form>
+                          rows="34"></textarea>
+                        <input type="hidden" name="original" id="original">
+                        <input type="hidden" name="id_div" id="id_div">
+                        <input type="hidden" name="generated_content" id="generated_content">
                       </div>
 
-                      <button id="compile" disabled type="submit" class="btn btn-inverse-success btn-sm" style="width: 100%">Save
+                      <button id="compile" type="submit" class="btn btn-inverse-success btn-sm" style="width: 100%">Save
                         Changes</button>
 
                     </form>
@@ -402,97 +375,98 @@ if (isset($_GET['id'])) {
                 <div class="card-body d-flex flex-column">
                   <div class="wrapper">
                     <div class="row">
-                      <p style="font-weight: 800;" class="col-md-10">
+                      <p class="col-md-10">
                         <?= $subject ?>
                       </p>
-                      <button type="submit" class="btn btn-inverse-success" style="padding: 1% 2% 1% 3%;"> <i
-                          class="fa fa-save"></i></button>
+                      <button id="saveConfig" type="submit" class="btn btn-inverse-success"
+                        style="padding: 1% 2% 1% 3%;"> <i class="fa fa-save"></i></button>
                     </div>
                     <form id="formMode" action="" method="GET">
                       <div class="form-group">
-                        <label for="type">Topic</label>
-                        <select style="border-radius: 10px; height: 40px" required class="form-control" id="topic"
-                          name="topic">
-                          <option selected disabled> Select </option>
-                          <?php foreach ($topics as $topic): ?>
-                            <option value="<?= $topic['id']; ?>"> <?= $topic['topic']; ?></option>
+                        <label for="type">Subjects</label>
+                        <select style="border-radius: 10px; height: 40px" required class="form-control"
+                          id="assessment_id" name="assessment_id">
+                          <option selected disabled>Select</option>
+                          <?php foreach ($assessments as $assessment): ?>
+                            <option value="<?= $assessment['id']; ?>" data-mode="<?= $assessment['mode']; ?>"
+                              data-type="<?= $assessment['type']; ?>"
+                              data-date="<?= date("Y-m-d", strtotime($assessment['date'])); ?>"
+                              data-time="<?= date("H:i", strtotime($assessment['time'])); ?>">
+                              <?= date("j F, Y H:i", strtotime($assessment['date'] . ' ' . $assessment['time'])); ?> | <?= $assessment['subject']; ?> - <?= $assessment['class']; ?>
+                            </option>
                           <?php endforeach; ?>
                         </select>
                       </div>
 
-                      <!-- implement display none/block -->
+                      <div id="messageDiv" style="height: 100%; justify-content: center; display: block;">
+                        <center>
+                          <p>Please select an assessment to edit</p>
+                        </center>
+                      </div>
 
-                      <hr style=" margin: 0px">
+                      <hr style="margin: 0px">
                       <center>
-                        <p class="align-text-center" style="font-size: small; padding: 0%; margin: 0px;">Schedule a
-                          class
-                        </p>
+                        <p class="align-text-center" style="font-size: small; padding: 0%; margin: 0px;">Reschedule</p>
                       </center>
-                      <hr style=" margin-top: 0px">
-
+                      <hr style="margin-top: 0px">
 
                       <div style="display: block">
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
-
                               <input style="border-radius: 10px; height: 40px" name="date" class="form-control"
-                                type="date">
+                                type="date" value="" disabled>
                             </div>
                           </div>
-
                           <div class="col-md-6">
                             <div class="form-group">
-
                               <input style="border-radius: 10px; height: 40px" class="form-control" type="time"
-                                name="time">
+                                name="time" value="" disabled>
                             </div>
                           </div>
                         </div>
-
-
-
-
-                        <div class="form-group">
-                          <label for="mode">Mode</label>
-                          <select style="border-radius: 10px; height: 40px" class="form-control" name="mode">
-                            <option disabled selected>Select</option>
-                            <option>Physical</option>
-                            <option>Virtual (Supervised)</option>
-                            <option>Virtual (AI Tutor)</option>
-                          </select>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="type">Type</label>
+                              <select style="border-radius: 10px; height: 40px" required class="form-control"
+                                name="type" disabled>
+                                <option selected disabled>Select</option>
+                                <option>Homework</option>
+                                <option>Test</option>
+                                <option>Class work</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="mode">Mode</label>
+                              <select style="border-radius: 10px; height: 40px" class="form-control" name="mode"
+                                disabled>
+                                <option disabled selected>Select</option>
+                                <option>Physical</option>
+                                <option>CBT</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
-
-                        <hr style=" margin: 0px">
+                        <hr style="margin: 0px">
                         <center>
-                          <p class="align-text-cente" style="font-size: small; padding: 0%; margin: 0px;">Modify
-                            Content</p>
+                          <p class="align-text-center" style="font-size: small; padding: 0%; margin: 0px;">Modify
+                            Question(s)</p>
                         </center>
-                        <hr style=" margin-top: 0px">
-
-                        <input type="hidden" name="topicContent" id="topicContent">
-
+                        <hr style="margin-top: 0px">
+                        <input type="hidden" name="questionContent" id="questionContent">
                         <div class="form-group">
-                          <label for="focus">What do you want to modify?</label>
-                          <textarea style="border-radius: 10px;" class="form-control" id="message" name="message"
-                            rows="9"
-                            placeholder="E.g. Spread the lessons across 4 sitting a week for 3 weeks..."></textarea>
+                          <label for="focus">Question Focus</label>
+                          <textarea style="border-radius: 10px;" class="form-control" id="focus" name="focus" rows="10"
+                            placeholder="E.g Generate questions from ... and ... topics only" disabled></textarea>
                         </div>
-                        <button type="submit" id="regenerate" class="btn btn-inverse-success btn-sm"
-                          style="width: 100%">Re-Generate
-                          Content</button>
+                        <button type="submit" id="regenerate" class="btn btn-inverse-success btn-sm" style="width: 100%"
+                          disabled>Re-Generate Content</button>
                       </div>
-
-
-
-                      <!-- implement display none/block -->
-                      <div style="height: 100%; justify-content: center; display: none;">
-                        <center>
-                          <p>Please select a topic to edit</p>
-                        </center>
-                      </div>
-
                     </form>
+                    <!-- message div for select assessment -->
 
                   </div>
                 </div>
@@ -502,8 +476,10 @@ if (isset($_GET['id'])) {
         </div>
 
 
+
+
         <script>
-           // Function to display a popup message
+          //Function to display a popup message
           function displayPopup(message, success) {
             var popup = document.createElement('div');
             popup.className = 'popup ' + (success ? 'success' : 'error');
@@ -523,33 +499,87 @@ if (isset($_GET['id'])) {
               popup.remove();
             }, 5000);
           }
+        </script>
 
 
-          document.getElementById("form_button").addEventListener("click", function () {
-            $.ajax({
-              type: 'POST',
-              url: 'suggest.php',
-              data: $('#subject_form').serialize(),
-              dataType: 'json',
+
+        <script>
+          document.getElementById('assessment_id').addEventListener('change', function () {
+            var selectedAssessment = this.options[this.selectedIndex];
+
+            var isTopicSelected = this.value !== '';
+            document.getElementsByName('date')[0].disabled = !isTopicSelected;
+            document.getElementsByName('time')[0].disabled = !isTopicSelected;
+            document.getElementsByName('type')[0].disabled = !isTopicSelected;
+            document.getElementsByName('mode')[0].disabled = !isTopicSelected;
+            document.getElementsByName('focus')[0].disabled = !isTopicSelected;
+            document.getElementById('regenerate').disabled = !isTopicSelected;
+
+            var messageDiv = document.getElementById('messageDiv');
+            messageDiv.style.display = isTopicSelected ? 'none' : 'block';
+
+            if (isTopicSelected) {
+              // Get the date and time values from the selected assessment
+              var dateValue = selectedAssessment.getAttribute('data-date');
+              var timeValue = selectedAssessment.getAttribute('data-time');
+              var modeValue = selectedAssessment.getAttribute('data-mode');
+              var typeValue = selectedAssessment.getAttribute('data-type');
+
+              // Update the date and time input fields
+              document.getElementsByName('date')[0].value = dateValue;
+              document.getElementsByName('time')[0].value = timeValue;
+              document.getElementsByName('mode')[0].value = modeValue;
+              document.getElementsByName('type')[0].value = typeValue;
+            }
+          });
+        </script>
+
+        <script>
+          // JavaScript and jQuery code
+          $(document).ready(function () {
+            document.getElementById('saveConfig').addEventListener('click', function () {
+
+              // Extract data from the form
+              var formData = {
+                date: $('input[name="date"]').val(),
+                time: $('input[name="time"]').val(),
+                mode: $('select[name="mode"]').val(),
+                type: $('select[name="type"]').val(),
+                id: $('select[name="assessment_id"]').val()
+              };
+
+              // Send an AJAX request to your PHP file
+              $.ajax({
+                type: 'POST',
+                url: 'compile_content.php',
+                data: formData,
+                success: function (response) {
+                  displayPopup(response.message, true);
+                  console.log(response);
+                },
+                error: function (error) {
+                  displayPopup(response.message, false);
+                  console.log(error);
+                }
+              });
             });
           });
-
         </script>
 
 
         <script>
           $(document).ready(function () {
-            $("#topic").change(function () {
+            $("#assessment_id").change(function () {
               const selectedValue = $(this).val();
 
               $.ajax({
                 type: 'POST',
                 url: 'get_content.php',
-                data: { 'topic_id': selectedValue },
+                data: { 'assessment_id': selectedValue },
                 dataType: 'json',
                 beforeSend: function () {
+                  $("#loadingText").text("Getting Content...");
                   document.getElementById("loading-screen").style.display = "flex";
-                  // Show loading icon or perform any pre-request actions
                 },
                 success: function (response) {
                   if (response.success) {
@@ -557,20 +587,22 @@ if (isset($_GET['id'])) {
                     console.log(response.content);
                     var textarea = document.getElementById("content");
                     textarea.value = response.content;
-                    var hiddendiv = document.getElementById("topicContent");
+                    var hiddendiv = document.getElementById("questionContent");
                     hiddendiv.value = response.content;
-                    var original = document.getElementById("original");
+                    var original = document.getElementById("id_div");
                     original.value = response.content;
-                    var lesson_id = document.getElementById("lesson_id");
-                    lesson_id.value = response.id;
-                   
+                    var id_div = document.getElementById("original");
+                    original.value = response.id;
+                    // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);
+                    displayPopup(response.message, false);
                   }
                 },
 
                 error: function (error, xhr) {
-                  console.error('Error:', error, xhr);
+                  //console.error('Error:', error, xhr);
+                  displayPopup(error, false);
                   // Handle AJAX errors here
                 },
                 complete: function () {
@@ -590,30 +622,34 @@ if (isset($_GET['id'])) {
                 data: $('#formMode').serialize(),
                 dataType: 'json',
                 beforeSend: function () {
+                  $("#loadingText").text("Updating Content... May take upto a minute");
                   document.getElementById("loading-screen").style.display = "flex";
                 },
                 success: function (response) {
                   if (response.success) {
+                    displayPopup(response.message, true);
                     console.log(response.content);
                     var textarea = document.getElementById("content");
                     textarea.value = response.content;
-                    var hidden = document.getElementById("topicContent");
+                    var hidden = document.getElementById("questionContent");
                     hidden.value = response.content;
                     var generated_content = document.getElementById("generated_content");
                     generated_content.value = response.content;
-
+                    var id_div = document.getElementById("id_div");
+                    original.value = response.id;
 
                     var compile_button = document.getElementById("compile");
-                    compile_button.innerText = "save";
-                    $('#compile').prop('disabled', false);
+                    compile_button.innerText = "Compile";
                     // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);
+                    displayPopup(response.message, false);
                   }
                 },
 
                 error: function (error, xhr) {
-                  console.error('Error:', error, xhr);
+                  //console.error('Error:', error, xhr);
+                  displayPopup(error, false);
                   // Handle AJAX errors here
                 },
                 complete: function () {
@@ -636,25 +672,31 @@ if (isset($_GET['id'])) {
                 data: $('#compileform').serialize(),
                 dataType: 'json',
                 beforeSend: function () {
+                  $("#loadingText").text("Saving Changes... May take upto a minute");
                   document.getElementById("loading-screen").style.display = "flex";
                 },
                 success: function (response) {
                   if (response.success) {
+                    displayPopup(response.message, true);
                     console.log(response.content);
                     var textarea = document.getElementById("content");
                     textarea.value = response.content;
-                    var hidden = document.getElementById("topicContent");
+                    var hidden = document.getElementById("questionContent");
                     hidden.value = response.content;
                     var original = document.getElementById("original");
                     original.value = response.content;
+                    var id_div = document.getElementById("id_div");
+                    original.value = response.id;
                     // Process the response here, e.g., update the DOM with the content
                   } else {
                     console.log('Error: ' + response.message);
+                    displayPopup(response.message, false);
                   }
                 },
 
                 error: function (error, xhr) {
-                  console.error('Error:', error, xhr);
+                  //console.error('Error:', error, xhr);
+                  displayPopup(error, false);
                   // Handle AJAX errors here
                 },
                 complete: function () {
@@ -685,17 +727,17 @@ if (isset($_GET['id'])) {
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="../../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <script src="../../../assets/vendors/js/vendor.bundle.addons.js"></script>
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="../assets/vendors/js/vendor.bundle.addons.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="../../../assets/js/shared/off-canvas.js"></script>
-  <script src="../../../assets/js/shared/misc.js"></script>
+  <script src="../assets/js/shared/off-canvas.js"></script>
+  <script src="../assets/js/shared/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="../../../assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
+  <script src="../assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
   <!-- End custom js for this page-->
 </body>
 
