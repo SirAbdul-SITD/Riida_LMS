@@ -17,9 +17,9 @@ error_reporting(E_ALL);
 
 
 $servername = "localhost";
-$username = "Rindalms_rindalms";
+$username = "riidalms_rindalms";
 $password = "OYAtshA03O,M5cvJrs";
-$database = "Rindalms_rindalms";
+$database = "riidalms_rindalms";
 
 
 // $servername = "localhost";
