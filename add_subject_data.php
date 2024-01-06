@@ -73,10 +73,10 @@ try {
 
                 $lastInsertedTopicId = $pdo->lastInsertId();
 
-                $userMessage = "Generate detailed steps on how to effectively teach this topic: " . $topic . " to " .$class . " pupils";
+                $userMessage = "Generate detailed content for this: " . $topic;
 
                 // Your OpenAI API key
-                $api_key = "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";
+                $api_key = "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";
 
                 // Data to send in the POST request
                 $data = json_encode([
@@ -84,7 +84,7 @@ try {
                     'messages' => [
                         [
                             "role" => "system",
-                            "content" => "You're an class teacher responsible for generating detailed lesson plan with step by step instructions on how to teach a given topic.",
+                            "content" => "You're an class teacher responsible for generating detailed topic content in easy explanations providing examples where needed for easy understanding of " . $class ." pupils",
                         ],
                         [
                             'role' => 'user',
