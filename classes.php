@@ -277,35 +277,36 @@ require("settings.php");
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="teachers.php" aria-expanded="false" aria-controls="ui-2">
+            <a class="nav-link" href="#" aria-expanded="false">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Teachers</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" href="classes.php" aria-expanded="false">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Classes</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="students.php" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" href="students.php" aria-expanded="false">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Students</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="subjects.php" aria-expanded="false" aria-controls="ui-1">
+            <a class="nav-link" href="subjects.php" aria-expanded="false">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Subjects</span>
               <i class="menu-arrow"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="assessments.php" aria-expanded="false" aria-controls="ui-3">
+            <a class="nav-link" href="assessments.php" aria-expanded="false"
+              aria-controls="ui-3">
               <i class="menu-icon typcn typcn-coffee"></i>
               <span class="menu-title">Assessments</span>
               <i class="menu-arrow"></i>
@@ -317,7 +318,7 @@ require("settings.php");
               <span class="menu-title">Calendar</span>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a class="nav-link" href="#">
               <i class="menu-icon typcn typcn-bell"></i>
