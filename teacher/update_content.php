@@ -74,7 +74,7 @@ try {
       $message = $_POST['focus'];
       $content = $_POST['questionContent'];
   
-      $userMessage = "regenerate this :'" . $content . "', but this time around use this instructions: '" .$message . "'.  return response in json format";
+      $userMessage = "regenerate this :'" . $content . "', but this time around use this instructions: '" .$message . "'.";
   
       // Your OpenAI API key
       $api_key = "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";

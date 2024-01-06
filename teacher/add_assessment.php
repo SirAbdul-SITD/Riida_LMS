@@ -17,7 +17,7 @@ try {
      $objective = isset($_POST['objective']) ? $_POST['objective'] : null;
      $essay = isset($_POST['essay']) ? $_POST['essay'] : null;
      $focus = isset($_POST['focus']) ? $_POST['focus'] : null;
-     $create_by = isset($_POST['tutor']) ? $_POST['tutor'] : null;
+     $teacher_id = isset($_POST['teacher_id']) ? $_POST['teacher_id'] : null;
      
     // Extract form data
         $class = $_POST['class'];
@@ -30,7 +30,7 @@ try {
         $objective = $_POST['objective'];
         $essay = $_POST['essay'];
         $focus = $_POST['focus'];
-        $create_by = $_POST['tutor'];
+        $teacher_id = $_POST['teacher_id'];
         // $create_datetime = date("Y-m-d H:i:s");
         $status = 'Queued';
 
@@ -125,8 +125,8 @@ try {
 
 
       $stmt = $pdo->prepare("INSERT INTO assessments 
-      (class, subject_id, subject, type, date, time, mode, objectives, essay, focus, create_by, questions, status) VALUES
-       (:class, :subject_id, :subject, :type, :date, :time, :mode, :objectives, :essay, :focus, :create_by, :questions, :status)");
+      (class, subject_id, subject, type, date, time, mode, objectives, essay, focus, teacher_id, questions, status) VALUES
+       (:class, :subject_id, :subject, :type, :date, :time, :mode, :objectives, :essay, :focus, :teacher_id, :questions, :status)");
       $stmt->bindParam(':class', $class, PDO::PARAM_STR);
       $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
       $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
@@ -138,7 +138,7 @@ try {
       $stmt->bindParam(':objectives', $objective, PDO::PARAM_STR);
       $stmt->bindParam(':essay', $essay, PDO::PARAM_STR);
       $stmt->bindParam(':focus', $focus, PDO::PARAM_STR);
-      $stmt->bindParam(':create_by', $create_by, PDO::PARAM_STR);
+      $stmt->bindParam(':teacher_id', $teacher_id, PDO::PARAM_STR);
       $stmt->bindParam(':status', $status, PDO::PARAM_STR);
       // $stmt->bindParam(':create_datetime', $create_datetime, PDO::PARAM_STR);
 

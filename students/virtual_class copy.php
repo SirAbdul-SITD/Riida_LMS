@@ -1113,9 +1113,9 @@ if (isset($_GET['id'])) {
         <!-- <footer class="footer">
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Rinda LMS
-              2023</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free Rinda LMS Demo from <a
-                href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Rinda School
+              2024</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Rinda LMS <a
+                href="#" target="_blank">Rinda School
                 Management
                 Software</a></span>
           </div>
